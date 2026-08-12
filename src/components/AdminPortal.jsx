@@ -2318,16 +2318,16 @@ export default function AdminPortal() {
                 </div>
               </div>
 
-              {/* Database Backup & Synchronization Panel */}
+              {/* Database Backup Panel */}
               <div className="glass-panel" style={{ padding: '1.75rem', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                 <h3 style={{ fontSize: '1.15rem', color: 'var(--primary)', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                   </svg>
-                  Database Synchronization
+                  Database Backup
                 </h3>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: 0 }}>
-                  Synchronize your students list, teacher accounts, and compiled academic marks between different devices (e.g. laptop and mobile).
+                  Export and import your student lists, teacher accounts, and compiled academic marks as a JSON file.
                 </p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '0.5rem' }}>
@@ -2388,105 +2388,6 @@ export default function AdminPortal() {
                         }}
                       />
                     </label>
-                  </div>
-
-                  {/* Real-time Cloud Sync Key */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
-                      <div>
-                        <span style={{ fontWeight: 600, fontSize: '0.9rem', display: 'block' }}>Real-time Cloud Sync Key</span>
-                        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Use this key on your other devices (e.g. mobile) to pair them.</span>
-                      </div>
-                      {syncBlobId ? (
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          onClick={() => {
-                            if (confirm('Are you sure you want to disable real-time sync on this device?')) {
-                              disconnectCloudSync();
-                            }
-                          }}
-                          style={{ flexShrink: 0, padding: '0.5rem 1rem', fontSize: '0.85rem', borderColor: '#ef4444', color: '#ef4444' }}
-                        >
-                          Disconnect
-                        </button>
-                      ) : (
-                        <span style={{ fontSize: '0.8rem', color: '#f59e0b', fontWeight: 500 }}>Not Active</span>
-                      )}
-                    </div>
-                    {syncBlobId && (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.25rem' }}>
-                        <div style={{ display: 'flex', gap: '0.5rem' }}>
-                          <input
-                            type="text"
-                            readOnly
-                            value={syncBlobId}
-                            className="form-control"
-                            style={{ fontFamily: 'monospace', fontSize: '0.8rem', padding: '0.4rem 0.6rem', backgroundColor: 'var(--bg-tertiary)', flex: 1 }}
-                          />
-                          <button
-                            type="button"
-                            className="btn btn-secondary"
-                            onClick={() => {
-                              navigator.clipboard.writeText(syncBlobId);
-                              alert('Cloud Sync Key copied to clipboard!');
-                            }}
-                            style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
-                          >
-                            Copy Key
-                          </button>
-                        </div>
-                        
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          onClick={() => {
-                            const link = `${window.location.origin}${window.location.pathname}?sync=${syncBlobId}`;
-                            navigator.clipboard.writeText(link);
-                            alert('Pairing Link copied to clipboard! Send this link to your other devices to pair them instantly.');
-                          }}
-                          style={{ padding: '0.5rem 1rem', fontSize: '0.8rem', width: '100%', marginTop: '0.25rem' }}
-                        >
-                          Copy Instant Pairing Link
-                        </button>
-                      </div>
-                    )}
-
-                    {/* Pair/Link Input */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', borderTop: '1px solid var(--border)', paddingTop: '1rem', marginTop: '0.5rem' }}>
-                      <span style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-primary)' }}>Pair with Another Device</span>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Enter another device's Sync Key to connect both devices to the same cloud database:</span>
-                      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
-                        <input
-                          type="text"
-                          placeholder="e.g. 019fecfc-a233-7537-baa6-b9e6875f9def"
-                          value={pairKeyInput}
-                          onChange={(e) => setPairKeyInput(e.target.value)}
-                          className="form-control"
-                          style={{ fontSize: '0.8rem', padding: '0.4rem 0.6rem', flex: 1 }}
-                        />
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={async () => {
-                            if (!pairKeyInput.trim()) {
-                              alert('Please enter a valid Cloud Sync Key.');
-                              return;
-                            }
-                            const result = await connectCloudSync(pairKeyInput.trim());
-                            if (result.success) {
-                              alert('Real-time sync established successfully! Database has been updated. The portal will now reload.');
-                              window.location.reload();
-                            } else {
-                              alert(`Error: ${result.error}`);
-                            }
-                          }}
-                          style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
-                        >
-                          Link Devices
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>

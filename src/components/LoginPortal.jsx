@@ -498,37 +498,6 @@ export default function LoginPortal() {
             </form>
           )}
 
-          <div style={{ textAlign: 'center', marginTop: '1.25rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
-            <button
-              type="button"
-              onClick={async () => {
-                const key = prompt("Enter the Cloud Sync Key from your laptop settings:");
-                if (key && key.trim()) {
-                  const result = await connectCloudSync(key.trim());
-                  if (result.success) {
-                    alert("Device synchronized successfully!");
-                    window.location.reload();
-                  } else {
-                    alert("Error: " + result.error);
-                  }
-                }
-              }}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'var(--text-secondary)',
-                fontSize: '0.75rem',
-                cursor: 'pointer',
-                opacity: 0.6,
-                textDecoration: 'underline',
-                transition: 'opacity 0.2s'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.opacity = 0.9}
-              onMouseLeave={(e) => e.currentTarget.style.opacity = 0.6}
-            >
-              Pair Device
-            </button>
-          </div>
 
         </div>
       </div>
