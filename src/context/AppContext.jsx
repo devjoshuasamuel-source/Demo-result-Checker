@@ -125,6 +125,94 @@ export const AppProvider = ({ children }) => {
         if (data.students) setStudents(data.students);
         if (data.results) setResults(data.results);
         if (data.auditLogs) setAuditLogs(data.auditLogs);
+
+        // Check if there is legacy local storage data to restore
+        const legacyMigrated = localStorage.getItem('mc_data_migrated_to_db');
+        if (legacyMigrated !== 'true') {
+          let legacyStudents = [];
+          let legacyResults = [];
+          let legacyClasses = [];
+          let legacyTeachers = [];
+          let legacySubjects = {};
+          let legacyAuditLogs = [];
+          let legacyGradingScale = null;
+
+          try {
+            legacyStudents = JSON.parse(localStorage.getItem('mc_students') || '[]');
+            legacyResults = JSON.parse(localStorage.getItem('mc_results') || '[]');
+            legacyClasses = JSON.parse(localStorage.getItem('mc_classes') || '[]');
+            legacyTeachers = JSON.parse(localStorage.getItem('mc_teachers') || '[]');
+            legacySubjects = JSON.parse(localStorage.getItem('mc_subjects') || '{}');
+            legacyAuditLogs = JSON.parse(localStorage.getItem('mc_audit_logs') || '[]');
+            legacyGradingScale = JSON.parse(localStorage.getItem('mc_grading_scale') || 'null');
+          } catch (e) {
+            console.error('Error parsing legacy localStorage data:', e);
+          }
+
+          const hasLegacyData = legacyStudents.length > 0 || legacyResults.length > 0 || legacyClasses.length > 0;
+          
+          if (hasLegacyData) {
+            console.log('Legacy local storage data detected. Checking if database restore is needed...');
+            
+            const serverStudentIds = (data.students || []).map(s => s.id);
+            const defaultStudentIds = ['std1', 'std2', 'std3', 'std4', 'std5'];
+            const isServerDefault = serverStudentIds.length === 0 || 
+              (serverStudentIds.length === 5 && serverStudentIds.every(id => defaultStudentIds.includes(id)));
+
+            if (isServerDefault) {
+              console.log('Database is in default state. Automatically restoring legacy local storage data to database server...');
+              
+              const importPayload = {
+                classes: legacyClasses.length > 0 ? legacyClasses : (data.classes || []),
+                students: legacyStudents.length > 0 ? legacyStudents : (data.students || []),
+                results: legacyResults.length > 0 ? legacyResults : (data.results || []),
+                teachers: legacyTeachers.length > 0 ? legacyTeachers : (data.teachers || []),
+                subjects: Object.keys(legacySubjects).length > 0 ? legacySubjects : (data.subjects || {}),
+                auditLogs: legacyAuditLogs.length > 0 ? legacyAuditLogs : (data.auditLogs || []),
+                gradingScale: legacyGradingScale || data.settings?.gradingScale || defaultGradingScale,
+                schoolName: localStorage.getItem('mc_school_name') || data.settings?.schoolName || 'Higgsfield Academy',
+                schoolSubtitle: localStorage.getItem('mc_school_subtitle') || data.settings?.schoolSubtitle || 'Standalone Academic Results Checker Portal',
+                schoolLogo: localStorage.getItem('mc_school_logo') || data.settings?.schoolLogo || '/logo.png',
+                schoolMotto: localStorage.getItem('mc_school_motto') || data.settings?.schoolMotto || 'Knowledge and Integrity',
+                schoolAddress: localStorage.getItem('mc_school_address') || data.settings?.schoolAddress || '',
+                reportCardFont: localStorage.getItem('mc_report_card_font') || data.settings?.reportCardFont || 'inter',
+                reportCardHeaderFont: localStorage.getItem('mc_report_card_header_font') || data.settings?.reportCardHeaderFont || 'cinzel',
+                reportCardHeaderFontSize: localStorage.getItem('mc_report_card_header_font_size') || data.settings?.reportCardHeaderFontSize || '2rem',
+                adminName: localStorage.getItem('mc_admin_name') || data.settings?.adminName || 'Dr. Joseph Alao',
+                adminEmail: localStorage.getItem('mc_admin_email') || data.settings?.adminEmail || 'admin@higgsfield.edu',
+                adminPassword: localStorage.getItem('mc_admin_password') || data.settings?.adminPassword || 'admin123',
+                adminAvatar: localStorage.getItem('mc_admin_avatar') || data.settings?.adminAvatar || defaultAvatar,
+                currentSession: localStorage.getItem('mc_current_session') || data.settings?.currentSession || '2025/2026',
+                currentTerm: localStorage.getItem('mc_current_term') || data.settings?.currentTerm || '3rd Term',
+                allowStudentReg: localStorage.getItem('mc_allow_student_reg') !== 'false',
+                maintenanceMode: localStorage.getItem('mc_maintenance_mode') === 'true'
+              };
+
+              try {
+                const response = await fetch('/api/import', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(importPayload)
+                });
+
+                if (response.ok) {
+                  console.log('Legacy data restored successfully!');
+                  localStorage.setItem('mc_data_migrated_to_db', 'true');
+                  window.location.reload();
+                } else {
+                  console.error('Failed to import legacy database payload.');
+                }
+              } catch (importErr) {
+                console.error('Error during automatic data migration:', importErr);
+              }
+            } else {
+              console.log('Database already contains non-default records. Skipping automatic restore.');
+              localStorage.setItem('mc_data_migrated_to_db', 'true');
+            }
+          } else {
+            localStorage.setItem('mc_data_migrated_to_db', 'true');
+          }
+        }
       }
     } catch (err) {
       console.error('Failed to bootstrap data:', err);
