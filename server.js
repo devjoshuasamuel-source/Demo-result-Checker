@@ -19,13 +19,23 @@ const __dirname = path.dirname(__filename);
 // Bootstrap API
 app.get('/api/bootstrap', async (req, res) => {
   try {
-    const settings = await pool.query('SELECT * FROM settings WHERE id = 1');
-    const classes = await pool.query('SELECT * FROM classes');
-    const subjects = await pool.query('SELECT * FROM subjects');
-    const teachers = await pool.query('SELECT * FROM teachers');
-    const students = await pool.query('SELECT * FROM students');
-    const results = await pool.query('SELECT * FROM results');
-    const auditLogs = await pool.query('SELECT * FROM audit_logs ORDER BY timestamp DESC');
+    const [
+      settings,
+      classes,
+      subjects,
+      teachers,
+      students,
+      results,
+      auditLogs
+    ] = await Promise.all([
+      pool.query('SELECT * FROM settings WHERE id = 1'),
+      pool.query('SELECT * FROM classes'),
+      pool.query('SELECT * FROM subjects'),
+      pool.query('SELECT * FROM teachers'),
+      pool.query('SELECT * FROM students'),
+      pool.query('SELECT * FROM results'),
+      pool.query('SELECT * FROM audit_logs ORDER BY timestamp DESC')
+    ]);
 
     // format subjects as an object keyed by id
     const subjectsObj = {};

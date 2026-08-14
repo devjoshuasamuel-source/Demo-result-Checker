@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useRef } from 'react';
 import { defaultAvatars } from '../mockData';
 
 export const AppContext = createContext();
@@ -225,9 +225,17 @@ export const AppProvider = ({ children }) => {
     fetchData();
   }, []);
 
+  const isFirstLoad = useRef(true);
+
   // Sync settings when they change after bootstrap completes (debounced)
   useEffect(() => {
     if (!isBootstrapped) return;
+    
+    // Skip initial sync when values are initialized from bootstrap
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
     const saveSettings = async () => {
       try {
         await fetch('/api/settings', {
