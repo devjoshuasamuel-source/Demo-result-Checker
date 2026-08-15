@@ -431,15 +431,14 @@ export default function ResultReport({ customResult = null, onBack = null }) {
           </div>
         </div>
 
-        {/* Mobile Accordion & Traits & Remarks Sections */}
+        {/* Mobile Subject Cards & Traits & Remarks Sections */}
         <div className="mobile-only-section no-print">
-          {/* Subject Accordion list */}
-          <div className="mobile-accordion-list">
+          {/* Subject scorecard cards list */}
+          <div className="mobile-subject-cards-list">
             {activeClass.subjects && activeClass.subjects.map((subId, index) => {
               const sub = subjects[subId] || { name: subId };
               const score = activeResult.scores[subId] || { ca1: '-', ca2: '-', exam: '-', total: '-' };
               const gradeInfo = score.total !== '-' ? getGradeInfo(score.total) : { grade: '-', remark: '-', color: '#64748b' };
-              const isExpanded = !!expandedSubjects[subId];
               
               const totalScore = parseFloat(score.total);
               let performanceClass = 'perf-red';
@@ -451,56 +450,30 @@ export default function ResultReport({ customResult = null, onBack = null }) {
               }
 
               return (
-                <div key={subId} className={`accordion-item ${performanceClass} ${isExpanded ? 'active' : ''}`}>
-                  <button
-                    type="button"
-                    className="accordion-header-btn"
-                    onClick={() => toggleSubject(subId)}
-                    aria-expanded={isExpanded}
-                  >
-                    <div className="accordion-header-left">
-                      <span className="subject-index">#{index + 1}</span>
-                      <span className="subject-name">{sub.name}</span>
+                <div key={subId} className={`mobile-subject-card ${performanceClass}`}>
+                  <div className="card-top-row">
+                    <div className="card-subject-info">
+                      <span className="card-subject-index">#{index + 1}</span>
+                      <span className="card-subject-name">{sub.name.toUpperCase()}</span>
                     </div>
-                    <div className="accordion-header-right">
+                    <div className="card-badge-group">
                       <span className="percentage-badge">{score.total !== '-' ? `${score.total}%` : '-'}</span>
                       <span className="letter-grade-badge">{gradeInfo.grade}</span>
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        strokeWidth="2.5" 
-                        className={`chevron-icon ${isExpanded ? 'rotated' : ''}`}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
-                  </button>
-
-                  <div className={`accordion-body-panel ${isExpanded ? 'expanded' : ''}`}>
-                    <div className="accordion-scores-grid">
-                      <div className="score-detail-box">
-                        <span className="score-detail-lbl">CA 1</span>
-                        <span className="score-detail-val">{score.ca1}</span>
-                        <span className="score-detail-max">/ 20</span>
-                      </div>
-                      <div className="score-detail-box">
-                        <span className="score-detail-lbl">CA 2</span>
-                        <span className="score-detail-val">{score.ca2}</span>
-                        <span className="score-detail-max">/ 20</span>
-                      </div>
-                      <div className="score-detail-box">
-                        <span className="score-detail-lbl">Exam</span>
-                        <span className="score-detail-val">{score.exam}</span>
-                        <span className="score-detail-max">/ 60-70</span>
-                      </div>
-                    </div>
-                    <div className="accordion-remark-box">
-                      <span className="remark-title">Teacher's Remarks</span>
-                      <p className="remark-text">{gradeInfo.remark || '-'}</p>
                     </div>
                   </div>
+                  
+                  <div className="card-bottom-grid">
+                    <div className="grid-score-pill"><span>CA 1:</span> <strong>{score.ca1}</strong></div>
+                    <div className="grid-score-pill"><span>CA 2:</span> <strong>{score.ca2}</strong></div>
+                    <div className="grid-score-pill"><span>Exam:</span> <strong>{score.exam}</strong></div>
+                    <div className="grid-score-pill highlight-pill"><span>Total:</span> <strong>{score.total}</strong></div>
+                  </div>
+
+                  {gradeInfo.remark && gradeInfo.remark !== '-' && (
+                    <div className="card-teacher-remark">
+                      <span className="remark-lbl">Remark:</span> <span className="remark-val">{gradeInfo.remark}</span>
+                    </div>
+                  )}
                 </div>
               );
             })}
