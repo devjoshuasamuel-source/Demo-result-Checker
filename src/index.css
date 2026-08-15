@@ -2043,4 +2043,410 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* ==========================================================================
+   MOBILE RESPONSIVE & MOBILE-FIRST LAYOUT OVERRIDES (SCREENS ONLY)
+   ========================================================================== */
+
+/* Max-width on all image/logo assets */
+img, .report-logo img, .student-photo-frame img, .admin-sidebar-logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fluid Typography using clamp() */
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+h2 {
+  font-size: clamp(1.25rem, 3.5vw, 1.8rem);
+}
+h3 {
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+}
+.report-school-details h1 {
+  font-size: clamp(1.25rem, 3.5vw, 2.25rem) !important;
+}
+
+/* Base interactive targets rule */
+button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
+  min-height: 44px; /* Ensure 44x44px tap targets */
+}
+
+/* Mobile Brand Header in Login Page */
+.login-portal-mobile-header {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .login-portal-brand-side {
+    display: none !important;
+  }
+  .login-portal-mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .login-portal-mobile-header img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: var(--shadow-sm);
+  }
+  .login-portal-mobile-header h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin: 0;
+    text-align: left;
+  }
+  .login-portal-mobile-header h2 span {
+    font-weight: 400;
+    color: var(--text-secondary);
+  }
+  .login-portal-mobile-header p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0;
+    text-align: left;
+  }
+}
+
+/* Mobile View Switcher and View States */
+.mobile-view-toggle {
+  display: none;
+}
+.hidden-view {
+  display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  /* Toggle buttons bar */
+  .mobile-view-toggle {
+    display: flex;
+    background-color: var(--bg-tertiary);
+    padding: 0.25rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.25rem;
+    gap: 0.25rem;
+    border: 1px solid var(--border);
+  }
+  .mobile-view-toggle .toggle-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+    background: transparent;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    min-height: 38px;
+  }
+  .mobile-view-toggle .toggle-btn.active {
+    background-color: var(--bg-secondary);
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  /* Toggle state overrides */
+  .report-table-view.active-view {
+    display: block !important;
+  }
+  .report-cards-view.active-view {
+    display: grid !important;
+  }
+
+  /* Academic Summary Table Responsive Wrap */
+  .report-table-view {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+  .report-table-view table {
+    min-width: 650px;
+  }
+  
+  /* Grade Card View Grid & Layout */
+  .mobile-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  .subject-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .subject-card:hover {
+    box-shadow: var(--shadow-md);
+  }
+  .subject-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+  .subject-card-index {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+  }
+  .subject-card-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .subject-card-scores {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  .score-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+  }
+  .score-row.total-highlight {
+    grid-column: span 2;
+    background-color: var(--primary-light);
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .subject-card-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px dashed var(--border);
+    padding-top: 0.75rem;
+  }
+  .badge-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+  }
+  .badge-title {
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+  
+  /* Soft Tints on Card backgrounds (matches table rows) */
+  .card-tint-excellent {
+    border-left: 4px solid #15803d;
+    background-color: #f6fdf9;
+  }
+  .card-tint-verygood {
+    border-left: 4px solid #1d4ed8;
+    background-color: #f5f9ff;
+  }
+  .card-tint-credit {
+    border-left: 4px solid #b45309;
+    background-color: #fffdf5;
+  }
+  .card-tint-fail {
+    border-left: 4px solid #be123c;
+    background-color: #fff5f6;
+  }
+}
+
+/* Result Report Page Responsive Layouts */
+@media screen and (max-width: 768px) {
+  /* Stack Result info block columns */
+  .report-body {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  /* Two-logo Header Stacking & Shrinking */
+  .report-header {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    align-items: center !important;
+    justify-items: center !important;
+    gap: 0.75rem !important;
+    padding-bottom: 1rem !important;
+  }
+  .report-logo {
+    display: flex !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .report-logo img {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .report-logo:nth-of-type(1) {
+    grid-column: 1 !important;
+    justify-self: end !important;
+  }
+  .report-logo:nth-of-type(2) {
+    grid-column: 2 !important;
+    justify-self: start !important;
+  }
+  .report-school-details {
+    grid-column: 1 / span 2 !important;
+    text-align: center !important;
+  }
+  
+  /* Buttons Stacking and targets */
+  .report-actions-container {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.75rem !important;
+    padding: 0.75rem !important;
+  }
+  .report-action-btn {
+    width: 100% !important;
+    margin: 0 !important;
+    height: 46px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* Admin Dashboard Mobile Layout Adjustments */
+@media screen and (max-width: 768px) {
+  .admin-hamburger-btn {
+    display: block !important;
+  }
+  
+  .admin-collapse-toggle-btn {
+    display: none !important; /* Hide desktop collapse in mobile view */
+  }
+  
+  /* Hamburger Slide-in Drawer sidebar positioning */
+  .admin-sidebar-wrapper {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: translateX(-100%) !important;
+    box-shadow: var(--shadow-lg) !important;
+    z-index: 1000 !important;
+    width: 260px !important;
+  }
+  
+  .admin-sidebar-wrapper.open {
+    transform: translateX(0) !important;
+  }
+  
+  .admin-sidebar-overlay {
+    position: fixed !important;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    backdrop-filter: blur(4px);
+    display: none;
+  }
+  .admin-sidebar-overlay.visible {
+    display: block !important;
+  }
+
+  .admin-content-scrollable {
+    padding: 1rem !important;
+    border-top-left-radius: 0 !important; /* Flat corner on mobile screen */
+  }
+
+  /* Top header icons condense */
+  .admin-header-bar {
+    padding: 0 1rem !important;
+  }
+  .admin-header-actions {
+    gap: 0.5rem !important;
+  }
+  
+  /* Hide search input by default on mobile screen (uses toggle trigger button) */
+  .admin-header-search-container {
+    display: none !important;
+  }
+  .admin-mobile-search-trigger-btn {
+    display: flex !important;
+  }
+  
+  /* Mobile search expanded panel style overlay */
+  .admin-header-search-expanded {
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 0.75rem;
+    padding: 0 0.5rem;
+  }
+  .btn-search-back {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  /* Hide Profile names, keep avatar only */
+  .admin-header-profile-info {
+    display: none !important;
+  }
+  
+  /* Clean signatures and remarks display */
+  .remarks-table-wrapper {
+    overflow-x: auto !important;
+  }
+  .remarks-table {
+    min-width: auto !important;
+  }
+}
+
+/* Ensure mobile search trigger button is hidden on desktop */
+.admin-mobile-search-trigger-btn {
+  display: none;
+}
+
+/* Ensure Keyboard Safe Scroll Margins */
+@media screen and (max-width: 480px) {
+  .login-portal-container {
+    width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    min-height: 100vh !important;
+  }
+  
+  .login-portal-form-side {
+    padding: 1.5rem !important;
+  }
+  
+  .form-control {
+    padding: 0.75rem 1rem !important; /* Comfortable tap target */
+    font-size: 16px !important; /* Prevents auto zoom in iOS Safari */
+  }
+  
+  .login-tab-btn {
+    font-size: 0.85rem !important;
+  }
+}
+
+
 

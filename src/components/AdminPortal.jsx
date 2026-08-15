@@ -77,6 +77,7 @@ export default function AdminPortal() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   // Settings tab local states
   const [settSchoolName, setSettSchoolName] = useState(schoolName);
@@ -647,137 +648,179 @@ export default function AdminPortal() {
       <div className="admin-main-wrapper">
         {/* Top Header Bar */}
         <header className="admin-header-bar no-print">
-          {/* Left Breadcrumbs & Mobile toggle button */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <button 
-              onClick={() => setSidebarOpen(true)} 
-              className="admin-hamburger-btn" 
-              title="Open Navigation Menu"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-
-            {/* Desktop Sidebar Collapse Toggle */}
-            <button 
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)} 
-              className="admin-collapse-toggle-btn no-print" 
-              title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
-              style={{
-                backgroundColor: '#facc15',
-                color: '#0f172a',
-                border: '1px solid rgba(0, 0, 0, 0.15)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                marginRight: '0.75rem',
-                boxShadow: '0 2px 8px rgba(250, 204, 21, 0.3)',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              {sidebarCollapsed ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M11 19l-7-7 7-7M19 19l-7-7 7-7" />
-                </svg>
-              )}
-            </button>
-          </div>
-
-          {/* Right Header items */}
-          <div className="admin-header-actions">
-            {/* Search container */}
-            <div className="admin-header-search-container">
-              <svg className="admin-header-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input 
-                type="text" 
-                placeholder="Search registry..." 
-                className="admin-header-search-input"
-              />
-            </div>
-
-            {/* Notification Bell */}
-            <button 
-              className="btn btn-secondary btn-icon" 
-              style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}
-              title="Notifications"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-            </button>
-
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="btn btn-secondary btn-icon"
-              title="Toggle Light/Dark Theme"
-              style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}
-            >
-              {theme === 'light' ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m2.828-9.9a5 5 0 11-7.07 7.07l.707-.707M17.657 17.657l.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              )}
-            </button>
-
-            {/* Profile Avatar */}
-            <div className="admin-header-profile" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <img 
-                src={adminAvatar}
-                alt="Admin Avatar"
-                className="admin-header-avatar"
-              />
-              <div className="admin-header-profile-info">
-                <span className="admin-header-profile-name">{adminName}</span>
-                <span className="admin-header-profile-role">Principal Admin</span>
-              </div>
+          {mobileSearchOpen ? (
+            <div className="admin-header-search-expanded" style={{ display: 'flex', alignItems: 'center', width: '100%', gap: '0.75rem' }}>
               <button 
                 type="button"
-                onClick={() => {
-                  logoutAdmin();
-                  setCurrentRole('student');
-                }}
-                className="btn"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.35rem',
-                  padding: '0.4rem 0.8rem',
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  backgroundColor: 'rgba(239, 68, 68, 0.2)',
-                  color: '#ff8a8a',
-                  border: '1px solid rgba(255, 138, 138, 0.4)',
-                  borderRadius: 'var(--radius-full)',
-                  cursor: 'pointer',
-                  marginLeft: '0.75rem',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 2px 6px rgba(239, 68, 68, 0.1)'
-                }}
-                title="Secure Lock Dashboard"
+                onClick={() => setMobileSearchOpen(false)} 
+                className="btn btn-secondary btn-icon btn-search-back"
+                title="Back"
+                style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', flexShrink: 0, padding: 0 }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                <span>Logout</span>
               </button>
+              <div className="admin-header-search-container-expanded" style={{ position: 'relative', flexGrow: 1 }}>
+                <svg className="admin-header-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" style={{ position: 'absolute', left: '0.875rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.7 }}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input 
+                  type="text" 
+                  placeholder="Search registry..." 
+                  className="admin-header-search-input"
+                  style={{ width: '100%', paddingLeft: '2.5rem' }}
+                  autoFocus
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <>
+              {/* Left Breadcrumbs & Mobile toggle button */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <button 
+                  onClick={() => setSidebarOpen(true)} 
+                  className="admin-hamburger-btn" 
+                  title="Open Navigation Menu"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+
+                {/* Desktop Sidebar Collapse Toggle */}
+                <button 
+                  onClick={() => setSidebarCollapsed(!sidebarCollapsed)} 
+                  className="admin-collapse-toggle-btn no-print" 
+                  title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+                  style={{
+                    backgroundColor: '#facc15',
+                    color: '#0f172a',
+                    border: '1px solid rgba(0, 0, 0, 0.15)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    marginRight: '0.75rem',
+                    boxShadow: '0 2px 8px rgba(250, 204, 21, 0.3)',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  {sidebarCollapsed ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M11 19l-7-7 7-7M19 19l-7-7 7-7" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+
+              {/* Right Header items */}
+              <div className="admin-header-actions">
+                {/* Mobile Search Toggle Trigger */}
+                <button 
+                  onClick={() => setMobileSearchOpen(true)}
+                  className="btn btn-secondary btn-icon admin-mobile-search-trigger-btn"
+                  title="Search registry"
+                  style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', padding: 0 }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+
+                {/* Search container */}
+                <div className="admin-header-search-container">
+                  <svg className="admin-header-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <input 
+                    type="text" 
+                    placeholder="Search registry..." 
+                    className="admin-header-search-input"
+                  />
+                </div>
+
+                {/* Notification Bell */}
+                <button 
+                  className="btn btn-secondary btn-icon" 
+                  style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', padding: 0 }}
+                  title="Notifications"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                </button>
+
+                {/* Theme Toggle */}
+                <button
+                  onClick={toggleTheme}
+                  className="btn btn-secondary btn-icon"
+                  title="Toggle Light/Dark Theme"
+                  style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', padding: 0 }}
+                >
+                  {theme === 'light' ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m2.828-9.9a5 5 0 11-7.07 7.07l.707-.707M17.657 17.657l.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  )}
+                </button>
+
+                {/* Profile Avatar */}
+                <div className="admin-header-profile" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <img 
+                    src={adminAvatar}
+                    alt="Admin Avatar"
+                    className="admin-header-avatar"
+                  />
+                  <div className="admin-header-profile-info">
+                    <span className="admin-header-profile-name">{adminName}</span>
+                    <span className="admin-header-profile-role">Principal Admin</span>
+                  </div>
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      logoutAdmin();
+                      setCurrentRole('student');
+                    }}
+                    className="btn"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                      padding: '0.4rem 0.8rem',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                      color: '#ff8a8a',
+                      border: '1px solid rgba(255, 138, 138, 0.4)',
+                      borderRadius: 'var(--radius-full)',
+                      cursor: 'pointer',
+                      marginLeft: '0.75rem',
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 2px 6px rgba(239, 68, 68, 0.1)'
+                    }}
+                    title="Secure Lock Dashboard"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    <span>Logout</span>
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </header>
 
         {/* Scrollable Content Pane */}

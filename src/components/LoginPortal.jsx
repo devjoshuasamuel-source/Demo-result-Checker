@@ -233,6 +233,18 @@ export default function LoginPortal() {
         {/* Right Side: Form side */}
         <div className="login-portal-form-side">
           
+          {/* Mobile brand header (visible on mobile only) */}
+          <div className="login-portal-mobile-header no-print">
+            <img 
+              src={schoolLogo} 
+              alt={`${schoolName} Logo`} 
+            />
+            <div>
+              <h2>{firstWord} <span>{restOfName}</span></h2>
+              <p>{schoolSubtitle}</p>
+            </div>
+          </div>
+
           {/* Tab Selection */}
           <div className="login-tabs-container">
             <button 

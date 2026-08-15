@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 
 export default function ResultReport({ customResult = null, onBack = null }) {
@@ -21,6 +21,8 @@ export default function ResultReport({ customResult = null, onBack = null }) {
 
   // Determine active result: passed-in for bulk prints, or global context
   const activeResult = customResult || viewingResult;
+
+  const [viewMode, setViewMode] = useState('card'); // 'card' or 'table' on mobile devices
 
   if (!activeResult) return null;
 
@@ -78,17 +80,8 @@ export default function ResultReport({ customResult = null, onBack = null }) {
     <div className="report-card-container">
       {/* Action buttons (hidden when printing) */}
       {!customResult && (
-        <div className="no-print" style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          backgroundColor: 'var(--bg-secondary)',
-          padding: '1rem',
-          borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border)',
-          marginBottom: '1rem'
-        }}>
-          <button onClick={handleBackClick} className="btn btn-secondary report-action-btn" style={{ border: '1px solid var(--border)' }}>
+        <div className="report-actions-container no-print">
+          <button onClick={handleBackClick} className="btn btn-secondary report-action-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -230,10 +223,34 @@ export default function ResultReport({ customResult = null, onBack = null }) {
           </div>
         </div>
 
+        {/* Mobile layout view switcher */}
+        <div className="mobile-view-toggle no-print">
+          <button 
+            type="button" 
+            onClick={() => setViewMode('card')} 
+            className={`toggle-btn ${viewMode === 'card' ? 'active' : ''}`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+            </svg>
+            Card View (Mobile-First)
+          </button>
+          <button 
+            type="button" 
+            onClick={() => setViewMode('table')} 
+            className={`toggle-btn ${viewMode === 'table' ? 'active' : ''}`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            Table View (Scrollable)
+          </button>
+        </div>
+
         {/* Report contents */}
         <div className="report-body">
           {/* Main Grade sheet table wrapped in rounded container */}
-          <div className="table-wrapper">
+          <div className={`table-wrapper report-table-view ${viewMode === 'table' ? 'active-view' : 'hidden-view'}`}>
             <table className="school-grid-table">
               <thead>
                 <tr>
@@ -298,6 +315,73 @@ export default function ResultReport({ customResult = null, onBack = null }) {
                 })}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile-First Card View (visible only on mobile screen) */}
+          <div className={`mobile-cards-grid report-cards-view ${viewMode === 'card' ? 'active-view' : 'hidden-view'}`}>
+            {activeClass.subjects && activeClass.subjects.map((subId, index) => {
+              const sub = subjects[subId] || { name: subId };
+              const score = activeResult.scores[subId] || { ca1: '-', ca2: '-', exam: '-', total: '-' };
+              const gradeInfo = score.total !== '-' ? getGradeInfo(score.total) : { grade: '-', remark: '-', color: '#64748b' };
+              
+              let pillClass = '';
+              let cardTintClass = '';
+              const g = gradeInfo.grade.toUpperCase();
+              if (g.startsWith('A')) {
+                cardTintClass = 'card-tint-excellent';
+                pillClass = 'badge-excellent';
+              } else if (g.startsWith('B')) {
+                cardTintClass = 'card-tint-verygood';
+                pillClass = 'badge-verygood';
+              } else if (g.startsWith('C')) {
+                cardTintClass = 'card-tint-credit';
+                pillClass = 'badge-credit';
+              } else if (g.startsWith('D') || g.startsWith('E')) {
+                pillClass = 'badge-weakpass';
+              } else if (g.startsWith('F')) {
+                cardTintClass = 'card-tint-fail';
+                pillClass = 'badge-fail';
+              }
+
+              return (
+                <div key={subId} className={`subject-card ${cardTintClass}`}>
+                  <div className="subject-card-header">
+                    <span className="subject-card-index">#{index + 1}</span>
+                    <h4 className="subject-card-name">{sub.name}</h4>
+                  </div>
+                  
+                  <div className="subject-card-scores">
+                    <div className="score-row">
+                      <span className="score-label">CA 1 (20%)</span>
+                      <span className="score-value">{score.ca1}</span>
+                    </div>
+                    <div className="score-row">
+                      <span className="score-label">CA 2 (20%)</span>
+                      <span className="score-value">{score.ca2}</span>
+                    </div>
+                    <div className="score-row">
+                      <span className="score-label">Exam (60%)</span>
+                      <span className="score-value">{score.exam}</span>
+                    </div>
+                    <div className="score-row total-highlight">
+                      <span className="score-label">Total Score</span>
+                      <span className="score-value bold-highlight">{score.total}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="subject-card-footer">
+                    <div className="badge-wrapper">
+                      <span className="badge-title">Grade</span>
+                      <span className={`grade-pill-badge ${pillClass}`}>{gradeInfo.grade}</span>
+                    </div>
+                    <div className="badge-wrapper">
+                      <span className="badge-title">Remarks</span>
+                      <span className={`grade-pill-badge ${pillClass}`}>{gradeInfo.remark}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           {/* Development traits Sidebars */}
