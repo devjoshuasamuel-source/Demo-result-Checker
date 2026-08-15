@@ -479,9 +479,9 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #ffffff;
   color: #0f172a;
   border: 4px double var(--primary);
-  border-radius: 18px; /* Consistent generous border radius */
+  border-radius: 16px; /* Smooth 16px corners */
   padding: 2.75rem;
-  box-shadow: 0 15px 40px rgba(0, 89, 169, 0.12);
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08);
   position: relative;
 }
 
@@ -2452,7 +2452,7 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
    Manna Academy Kaduna Custom Branding & Print Styles
    ========================================== */
 .font-manna {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: #1e293b;
   --primary-color: #1B2A6B;
   --accent-color: #FFD100;
@@ -2634,11 +2634,11 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
   color: #ffffff !important;
   font-size: 15px;
   font-weight: 800;
-  padding: 8px 0;
+  padding: 10px 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-radius: 6px;
-  margin: 25px 0 15px 0;
+  border-radius: 8px;
+  margin: 0 0 1rem 0;
   border: 1px solid #008747 !important;
 }
 
@@ -2646,45 +2646,49 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
 .font-manna .manna-grid-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 13px;
   background-color: #ffffff;
 }
 
 .font-manna .manna-grid-table th {
-  background-color: #1B2A6B !important;
-  color: #ffffff !important;
+  background-color: #F1F5F9 !important;
+  color: #1E293B !important;
   border: 1px solid #cbd5e1 !important;
-  padding: 6px 8px;
+  padding: 10px 12px;
   font-weight: 750;
   text-transform: uppercase;
   text-align: center;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .font-manna .manna-grid-table th.sub-headers,
 .font-manna .manna-grid-table tr.sub-headers th {
-  background-color: #243580 !important;
-  font-size: 9.5px;
-  padding: 4px 6px;
+  background-color: #F8FAFC !important;
+  color: #475569 !important;
+  font-size: 11px;
+  padding: 6px 8px;
 }
 
 .font-manna .manna-grid-table td {
   border: 1px solid #cbd5e1;
-  padding: 8px 10px;
+  padding: 10px 12px;
   text-align: center;
   color: #0f172a;
   font-weight: 500;
+  font-size: 13px;
 }
 
 .font-manna .manna-grid-table td.subject-name {
   text-align: left;
   font-weight: 700;
   color: #1B2A6B;
+  min-width: 220px;
+  white-space: nowrap;
 }
 
 .font-manna .manna-grid-table td.bold-highlight {
   font-weight: 800;
-  font-size: 12.5px;
+  font-size: 14px;
 }
 
 .font-manna .manna-grid-table td.remark-text-cell {
@@ -2715,23 +2719,26 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
 .font-manna .traits-block-table table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 11.5px;
+  font-size: 13px;
 }
 
 .font-manna .traits-block-table th {
-  background-color: #e2e8f0;
-  color: #1f2937;
-  padding: 8px 12px;
+  background-color: #F1F5F9;
+  color: #1E293B;
+  padding: 10px 12px;
   font-weight: 800;
   text-align: left;
   text-transform: uppercase;
   border-bottom: 1px solid #cbd5e1;
+  font-size: 13px;
 }
 
 .font-manna .traits-block-table td {
-  padding: 6px 12px;
+  padding: 10px 12px;
   border-bottom: 1px solid #cbd5e1;
   color: #475569;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .font-manna .traits-block-table tr:last-child td {
@@ -2743,6 +2750,7 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
   font-weight: 750;
   color: #0f172a;
   background-color: #f8fafc;
+  font-size: 13px;
 }
 
 /* Remarks section styles */
@@ -2755,30 +2763,30 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
 }
 
 .font-manna .remarks-header-bar {
-  background-color: #e2e8f0;
-  color: #1f2937;
-  font-size: 12px;
+  background-color: #F1F5F9;
+  color: #1E293B;
+  font-size: 13px;
   font-weight: 800;
-  padding: 6px 12px;
+  padding: 8px 16px;
   text-transform: uppercase;
   border-bottom: 1px solid #cbd5e1;
 }
 
 .font-manna .remarks-content-body {
-  padding: 15px;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 
 .font-manna .remarks-row {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  padding: 16px;
 }
 
 .font-manna .remarks-label-block {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -2800,15 +2808,15 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
   grid-template-columns: 2fr 1.5fr 1fr;
   gap: 15px;
   align-items: center;
-  border-top: 1px dashed #e2e8f0;
-  padding-top: 8px;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 10px;
 }
 
 .font-manna .sig-meta-col {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .font-manna .sig-meta-col .sig-lbl {
@@ -2822,23 +2830,24 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
 }
 
 .font-manna .signature-box-img {
-  height: 36px;
-  width: 100px;
+  height: 40px;
+  width: 120px;
   border-bottom: 1px solid #94a3b8;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
 .font-manna .signature-box-img img {
-  max-height: 100%;
+  max-height: 40px;
   max-width: 100%;
   object-fit: contain;
+  mix-blend-mode: multiply;
 }
 
 .font-manna .sig-fallback-text {
   font-family: cursive;
-  font-size: 10px;
+  font-size: 11px;
   color: #1e3a8a;
 }
 
@@ -2902,8 +2911,8 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
   }
 
   .font-manna .manna-grid-table th {
-    background-color: #1B2A6B !important;
-    color: #ffffff !important;
+    background-color: #F1F5F9 !important;
+    color: #1E293B !important;
     border: 1px solid #cbd5e1 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -2911,7 +2920,8 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
 
   .font-manna .manna-grid-table th.sub-headers,
   .font-manna .manna-grid-table tr.sub-headers th {
-    background-color: #243580 !important;
+    background-color: #F8FAFC !important;
+    color: #475569 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -2930,13 +2940,15 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
   }
 
   .font-manna .traits-block-table th {
-    background-color: #e2e8f0 !important;
+    background-color: #F1F5F9 !important;
+    color: #1E293B !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
   .font-manna .remarks-header-bar {
-    background-color: #e2e8f0 !important;
+    background-color: #F1F5F9 !important;
+    color: #1E293B !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -3683,17 +3695,31 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
 
 /* Remarks Pill & Colored Text */
 .remark-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 20px;
   font-size: 11px;
   font-weight: 750;
   text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .remark-badge-green {
-  color: #00A859 !important;
+  background-color: #DCFCE7 !important;
+  color: #166534 !important;
+}
+
+.remark-badge-blue {
+  background-color: #E0F2FE !important;
+  color: #0369A1 !important;
 }
 
 .remark-badge-red {
-  color: #ef4444 !important;
+  background-color: #FEE2E2 !important;
+  color: #991B1B !important;
 }
 
 .remark-normal {
@@ -3704,7 +3730,7 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
 .bottom-actions-container {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
   width: 100%;
   max-width: 600px;
   margin: 1.5rem auto 0 auto;
@@ -3713,7 +3739,7 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
 
 .actions-row-centered {
   display: flex;
-  gap: 1rem;
+  gap: 12px;
   width: 100%;
 }
 
@@ -3721,7 +3747,7 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
   background-color: #FFCC00 !important;
   color: #0f172a !important;
   border: 1px solid #d4a000 !important;
-  border-radius: var(--radius-md) !important;
+  border-radius: 8px !important;
   padding: 0.75rem 1.5rem !important;
   font-size: 0.95rem !important;
   font-weight: 700 !important;
@@ -3731,7 +3757,7 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 0.5rem !important;
+  gap: 8px !important;
   box-shadow: var(--shadow-sm) !important;
 }
 

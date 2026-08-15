@@ -348,7 +348,8 @@ export default function ResultReport({ customResult = null, onBack = null }) {
                       const totalScore = parseFloat(score.total);
                       let remarkClass = 'remark-normal';
                       if (!isNaN(totalScore)) {
-                        if (totalScore >= 50) remarkClass = 'remark-badge-green';
+                        if (totalScore >= 75) remarkClass = 'remark-badge-green';
+                        else if (totalScore >= 50) remarkClass = 'remark-badge-blue';
                         else remarkClass = 'remark-badge-red';
                       }
 
