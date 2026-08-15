@@ -31,7 +31,8 @@ export default function ResultReport({ customResult = null, onBack = null }) {
     schoolAddress,
     reportCardFont,
     reportCardHeaderFont,
-    reportCardHeaderFontSize
+    reportCardHeaderFontSize,
+    setCurrentRole
   } = useContext(AppContext);
 
   // Determine active result: passed-in for bulk prints, or global context
@@ -65,6 +66,11 @@ export default function ResultReport({ customResult = null, onBack = null }) {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleBackToHome = () => {
+    setViewingResult(null);
+    setCurrentRole('student');
   };
 
   // Convert position rank to ordinal string (e.g. 1st, 2nd, 3rd)
@@ -101,25 +107,6 @@ export default function ResultReport({ customResult = null, onBack = null }) {
 
   return (
     <div className="report-card-container">
-      {/* Action buttons (hidden when printing) */}
-      {!customResult && (
-        <div className="report-actions-container no-print">
-          <button onClick={handleBackClick} className="btn btn-secondary report-action-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Search Again / Back
-          </button>
-          
-          <button onClick={handlePrint} className="btn btn-primary report-action-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-            </svg>
-            Print Result / Save PDF
-          </button>
-        </div>
-      )}
-
       <div className="report-card font-manna">
         {/* Header / Branding block */}
         <div className="report-header desktop-only-section">
@@ -127,8 +114,7 @@ export default function ResultReport({ customResult = null, onBack = null }) {
             <img src={ctxLogo} alt="Manna Academy Logo" className="logo-left-img" />
           </div>
           <div className="report-school-details">
-            <h1>MANNA ACADEMY,</h1>
-            <h2 className="school-city">KADUNA</h2>
+            <h1>Manna Academy, Kaduna</h1>
             <p className="school-meta-address">
               Plot C2A, Hakimi Close, off Makera-Kujama Road, Sabo G.R.A, Kaduna South, Kaduna
             </p>
@@ -189,12 +175,14 @@ export default function ResultReport({ customResult = null, onBack = null }) {
               <tr>
                 <td className="grid-label">Mother's Name</td>
                 <td className="grid-val">{student.motherName || '-'}</td>
-                <td className="grid-label">Class</td>
-                <td className="grid-val text-uppercase">{activeClass.name || '-'}</td>
+                <td className="grid-label"></td>
+                <td className="grid-val"></td>
               </tr>
               <tr>
+                <td className="grid-label">Class</td>
+                <td className="grid-val text-uppercase">{activeClass.name || '-'}</td>
                 <td className="grid-label">Year</td>
-                <td className="grid-val" colSpan="3">{activeResult.session || '-'} Academic Session</td>
+                <td className="grid-val">{activeResult.session || '-'} Academic Session</td>
               </tr>
               <tr>
                 <td className="grid-label">Total Marks Obtainable</td>
@@ -204,7 +192,9 @@ export default function ResultReport({ customResult = null, onBack = null }) {
               </tr>
               <tr>
                 <td className="grid-label">Average</td>
-                <td className="grid-val" colSpan="3">{studentRankInfo.average}%</td>
+                <td className="grid-val">{studentRankInfo.average}%</td>
+                <td className="grid-label"></td>
+                <td className="grid-val"></td>
               </tr>
             </tbody>
           </table>
@@ -326,169 +316,116 @@ export default function ResultReport({ customResult = null, onBack = null }) {
 
         {/* Report contents */}
         <div className="report-body desktop-only-section">
-          {/* Main Grade sheet table wrapped in rounded container */}
-          <div className={`table-wrapper report-table-view ${viewMode === 'table' ? 'active-view' : 'hidden-view'}`}>
-            <table className="manna-grid-table">
-              <thead>
-                <tr>
-                  <th style={{ width: '45px' }} rowspan="2">No.</th>
-                  <th style={{ textAlign: 'left' }} rowspan="2">Subject</th>
-                  <th style={{ width: '85px' }}>CA 1</th>
-                  <th style={{ width: '85px' }}>CA 2</th>
-                  <th style={{ width: '85px' }}>Exams</th>
-                  <th style={{ width: '85px' }}>Total</th>
-                  <th>Teacher's Remarks</th>
-                </tr>
-                <tr className="sub-headers">
-                  <th>15/20%</th>
-                  <th>15/20%</th>
-                  <th>60/70%</th>
-                  <th>100%</th>
-                  <th>Subject Performance</th>
-                </tr>
-              </thead>
-              <tbody>
-                {activeClass.subjects && activeClass.subjects.map((subId, index) => {
-                  const sub = subjects[subId] || { name: subId };
-                  const score = activeResult.scores[subId] || { ca1: '-', ca2: '-', exam: '-', total: '-' };
-                  const gradeInfo = score.total !== '-' ? getGradeInfo(score.total) : { grade: '-', remark: '-', color: '#64748b' };
-                  
-                  return (
-                    <tr key={subId}>
-                      <td>{index + 1}</td>
-                      <td className="subject-name">{sub.name}</td>
-                      <td>{score.ca1}</td>
-                      <td>{score.ca2}</td>
-                      <td>{score.exam}</td>
-                      <td className="bold-highlight">{score.total}</td>
-                      <td className="remark-text-cell">{gradeInfo.remark}</td>
+          <div className="desktop-split-layout">
+            {/* Left Column: Grade Sheet (70% width) */}
+            <div className="desktop-layout-left">
+              <div className="table-wrapper report-table-view">
+                <table className="manna-grid-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: '45px' }} rowspan="2">No.</th>
+                      <th style={{ textAlign: 'left' }} rowspan="2">Subject</th>
+                      <th style={{ width: '85px' }}>CA 1</th>
+                      <th style={{ width: '85px' }}>CA 2</th>
+                      <th style={{ width: '85px' }}>Exams</th>
+                      <th style={{ width: '85px' }}>Total</th>
+                      <th>Teacher's Remarks</th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                    <tr className="sub-headers">
+                      <th>15/20%</th>
+                      <th>15/20%</th>
+                      <th>60/70%</th>
+                      <th>100%</th>
+                      <th>Subject Performance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activeClass.subjects && activeClass.subjects.map((subId, index) => {
+                      const sub = subjects[subId] || { name: subId };
+                      const score = activeResult.scores[subId] || { ca1: '-', ca2: '-', exam: '-', total: '-' };
+                      const gradeInfo = score.total !== '-' ? getGradeInfo(score.total) : { grade: '-', remark: '-', color: '#64748b' };
+                      
+                      const totalScore = parseFloat(score.total);
+                      let remarkClass = 'remark-normal';
+                      if (!isNaN(totalScore)) {
+                        if (totalScore >= 50) remarkClass = 'remark-badge-green';
+                        else remarkClass = 'remark-badge-red';
+                      }
 
-          {/* Mobile-First Card View (visible only on mobile screen) */}
-          <div className={`mobile-cards-grid report-cards-view ${viewMode === 'card' ? 'active-view' : 'hidden-view'}`}>
-            {activeClass.subjects && activeClass.subjects.map((subId, index) => {
-              const sub = subjects[subId] || { name: subId };
-              const score = activeResult.scores[subId] || { ca1: '-', ca2: '-', exam: '-', total: '-' };
-              const gradeInfo = score.total !== '-' ? getGradeInfo(score.total) : { grade: '-', remark: '-', color: '#64748b' };
-              
-              return (
-                <div key={subId} className="subject-card">
-                  <div className="subject-card-header">
-                    <span className="subject-card-index">#{index + 1}</span>
-                    <h4 className="subject-card-name">{sub.name}</h4>
-                  </div>
-                  
-                  <div className="subject-card-scores">
-                    <div className="score-row">
-                      <span className="score-label">CA 1 (15/20%)</span>
-                      <span className="score-value">{score.ca1}</span>
-                    </div>
-                    <div className="score-row">
-                      <span className="score-label">CA 2 (15/20%)</span>
-                      <span className="score-value">{score.ca2}</span>
-                    </div>
-                    <div className="score-row">
-                      <span className="score-label">Exam (60/70%)</span>
-                      <span className="score-value">{score.exam}</span>
-                    </div>
-                    <div className="score-row total-highlight">
-                      <span className="score-label">Total Score (100%)</span>
-                      <span className="score-value bold-highlight">{score.total}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="subject-card-footer">
-                    <div className="badge-wrapper">
-                      <span className="badge-title">Teacher's Remarks</span>
-                      <span className="remark-text-val">{gradeInfo.remark}</span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Development traits Sidebars */}
-          <div className="traits-layout-grid">
-            {/* Effective Development ratings */}
-            <div className="traits-block-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Effective Development</th>
-                    <th style={{ width: '80px' }}>Rating</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="trait-item-row">
-                    <td>Activeness</td>
-                    <td className="rating-val">{activeResult.traits?.activeness || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Attendance</td>
-                    <td className="rating-val">{activeResult.traits?.attendance || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Punctuality</td>
-                    <td className="rating-val">{activeResult.traits?.punctuality || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Self Control</td>
-                    <td className="rating-val">{activeResult.traits?.selfControl || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Honesty</td>
-                    <td className="rating-val">{activeResult.traits?.honesty || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Humility</td>
-                    <td className="rating-val">{activeResult.traits?.humility || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Leadership</td>
-                    <td className="rating-val">{activeResult.traits?.leadership || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Neatness</td>
-                    <td className="rating-val">{activeResult.traits?.neatness || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Communication</td>
-                    <td className="rating-val">{activeResult.traits?.communication || 0}</td>
-                  </tr>
-                </tbody>
-              </table>
+                      return (
+                        <tr key={subId}>
+                          <td>{index + 1}</td>
+                          <td className="subject-name">{sub.name.toUpperCase()} ✓</td>
+                          <td>{score.ca1}</td>
+                          <td>{score.ca2}</td>
+                          <td>{score.exam}</td>
+                          <td className="bold-highlight">{score.total}</td>
+                          <td className="remark-text-cell">
+                            <span className={`remark-pill ${remarkClass}`}>{gradeInfo.remark}</span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
-            {/* Psychomotor ratings */}
-            <div className="traits-block-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Psychomotor Skills</th>
-                    <th style={{ width: '80px' }}>Rating</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="trait-item-row">
-                    <td>Handwriting</td>
-                    <td className="rating-val">{activeResult.psychomotor?.handwriting || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Fluency</td>
-                    <td className="rating-val">{activeResult.psychomotor?.fluency || 0}</td>
-                  </tr>
-                  <tr className="trait-item-row">
-                    <td>Neatness</td>
-                    <td className="rating-val">{activeResult.psychomotor?.neatness || 0}</td>
-                  </tr>
-                </tbody>
-              </table>
+            {/* Right Column: Developmental Traits (30% width) */}
+            <div className="desktop-layout-right">
+              {/* Effective Development ratings */}
+              <div className="traits-block-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Effective Development</th>
+                      <th style={{ width: '70px' }}>Rating</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { label: 'Activeness', val: activeResult.traits?.activeness },
+                      { label: 'Attendance', val: activeResult.traits?.attendance },
+                      { label: 'Punctuality', val: activeResult.traits?.punctuality },
+                      { label: 'Self Control', val: activeResult.traits?.selfControl },
+                      { label: 'Honesty', val: activeResult.traits?.honesty },
+                      { label: 'Humility', val: activeResult.traits?.humility },
+                      { label: 'Leadership', val: activeResult.traits?.leadership },
+                      { label: 'Neatness', val: activeResult.traits?.neatness },
+                      { label: 'Communication', val: activeResult.traits?.communication }
+                    ].map((item) => (
+                      <tr key={item.label} className="trait-item-row">
+                        <td>{item.label}</td>
+                        <td className="rating-val">{item.val || 0}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Psychomotor ratings */}
+              <div className="traits-block-table" style={{ marginTop: '1.25rem' }}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Psychomotor Skills</th>
+                      <th style={{ width: '70px' }}>Rating</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { label: 'Handwriting', val: activeResult.psychomotor?.handwriting },
+                      { label: 'Fluency', val: activeResult.psychomotor?.fluency },
+                      { label: 'Neatness', val: activeResult.psychomotor?.neatness }
+                    ].map((item) => (
+                      <tr key={item.label} className="trait-item-row">
+                        <td>{item.label}</td>
+                        <td className="rating-val">{item.val || 0}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -761,6 +698,23 @@ export default function ResultReport({ customResult = null, onBack = null }) {
           <span>Security Hash: PRINT-VALID-{new Date(activeResult.remarks?.principalDate || Date.now()).getFullYear()}</span>
         </div>
       </div>
+
+      {/* Bottom Action Buttons (hidden when printing) */}
+      {!customResult && (
+        <div className="bottom-actions-container no-print">
+          <div className="actions-row-centered">
+            <button onClick={handlePrint} className="btn-golden btn-print">
+              🖨 Print
+            </button>
+            <button onClick={handleBackClick} className="btn-golden btn-search">
+              🔄 Search Again
+            </button>
+          </div>
+          <button onClick={handleBackToHome} className="btn-golden btn-home-full">
+            Back To Home Page
+          </button>
+        </div>
+      )}
     </div>
   );
 }
