@@ -1,6 +1,21 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 
+function PillRating({ value }) {
+  const ratingValue = parseInt(value, 10) || 0;
+  return (
+    <div className="pill-rating" aria-label={`${ratingValue} out of 5`}>
+      {[1, 2, 3, 4, 5].map((num) => (
+        <span
+          key={num}
+          className={`pill-bar-segment ${num <= ratingValue ? 'filled' : ''}`}
+        />
+      ))}
+      <span className="pill-rating-numeric">{ratingValue}/5</span>
+    </div>
+  );
+}
+
 export default function ResultReport({ customResult = null, onBack = null }) {
   const {
     viewingResult,
@@ -23,6 +38,8 @@ export default function ResultReport({ customResult = null, onBack = null }) {
   const activeResult = customResult || viewingResult;
 
   const [viewMode, setViewMode] = useState('card'); // 'card' or 'table' on mobile devices
+  const [showSecondaryMeta, setShowSecondaryMeta] = useState(false);
+  const [expandedSubjects, setExpandedSubjects] = useState({});
 
   if (!activeResult) return null;
 
@@ -105,7 +122,7 @@ export default function ResultReport({ customResult = null, onBack = null }) {
 
       <div className="report-card font-manna">
         {/* Header / Branding block */}
-        <div className="report-header">
+        <div className="report-header desktop-only-section">
           <div className="report-logo">
             <img src={ctxLogo} alt="Manna Academy Logo" className="logo-left-img" />
           </div>
@@ -125,13 +142,13 @@ export default function ResultReport({ customResult = null, onBack = null }) {
         </div>
 
         {/* Divider and centered student name */}
-        <div className="header-divider"></div>
-        <h2 className="student-header-title">
+        <div className="header-divider desktop-only-section"></div>
+        <h2 className="student-header-title desktop-only-section">
           {student.name ? student.name.toUpperCase() : '-'}
         </h2>
 
         {/* Student identity block */}
-        <div className="report-identity">
+        <div className="report-identity desktop-only-section">
           <div className="student-photo-frame">
             {student.photo ? (
               <img src={student.photo} alt={student.name} />
@@ -154,7 +171,7 @@ export default function ResultReport({ customResult = null, onBack = null }) {
         </div>
 
         {/* Identity Grid Table */}
-        <div className="identity-table-wrapper">
+        <div className="identity-table-wrapper desktop-only-section">
           <table className="identity-table-grid">
             <tbody>
               <tr>
@@ -194,12 +211,97 @@ export default function ResultReport({ customResult = null, onBack = null }) {
         </div>
 
         {/* Section divider banner */}
-        <div className="section-banner-centered">
+        <div className="section-banner-centered desktop-only-section">
           Grade Sheet
         </div>
 
+        {/* Mobile-Only Hero Summary Card & Profile Header */}
+        <div className="mobile-only-section no-print">
+          <div className="mobile-hero-card">
+            <div className="mobile-hero-main">
+              <div className="mobile-hero-avatar">
+                {student.photo ? (
+                  <img src={student.photo} alt={student.name} />
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+                    <rect width="100" height="100" fill="#f8fafc" />
+                    <circle cx="50" cy="40" r="20" fill="#cbd5e1" />
+                    <path d="M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z" fill="#cbd5e1" />
+                  </svg>
+                )}
+              </div>
+
+              <div className="mobile-hero-info">
+                <h3 className="mobile-hero-name">{student.name || '-'}</h3>
+                <div className="mobile-hero-sub">
+                  <span className="mobile-hero-class">{activeClass.name || '-'}</span>
+                  <span className="mobile-hero-divider">•</span>
+                  <span className="mobile-hero-roll">Roll: {String(student.rollNo || '-').padStart(5, '0')}</span>
+                </div>
+              </div>
+
+              <div className={`mobile-hero-gpa ${getPerformanceClass(studentRankInfo.average)}`}>
+                <span className="gpa-label">Average</span>
+                <span className="gpa-value">{studentRankInfo.average}%</span>
+              </div>
+            </div>
+
+            <button 
+              type="button"
+              className="mobile-details-toggle-btn"
+              onClick={() => setShowSecondaryMeta(!showSecondaryMeta)}
+              aria-expanded={showSecondaryMeta}
+            >
+              <span>{showSecondaryMeta ? 'Hide Details' : 'Show Secondary Details'}</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                className={`chevron-icon ${showSecondaryMeta ? 'rotated' : ''}`}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <div className={`mobile-secondary-meta-drawer ${showSecondaryMeta ? 'expanded' : ''}`}>
+              <div className="mobile-meta-grid">
+                <div className="meta-grid-item">
+                  <span className="meta-item-label">Reg. Number</span>
+                  <span className="meta-item-val">{formatRegNo(student.rollNo)}</span>
+                </div>
+                <div className="meta-grid-item">
+                  <span className="meta-item-label">Session</span>
+                  <span className="meta-item-val">{activeResult.session}</span>
+                </div>
+                <div className="meta-grid-item">
+                  <span className="meta-item-label">Term</span>
+                  <span className="meta-item-val">{activeResult.term}</span>
+                </div>
+                <div className="meta-grid-item">
+                  <span className="meta-item-label">Date of Birth</span>
+                  <span className="meta-item-val">{student.dob || '-'}</span>
+                </div>
+                <div className="meta-grid-item">
+                  <span className="meta-item-label">Father's Name</span>
+                  <span className="meta-item-val">{student.fatherName || '-'}</span>
+                </div>
+                <div className="meta-grid-item">
+                  <span className="meta-item-label">Mother's Name</span>
+                  <span className="meta-item-val">{student.motherName || '-'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mobile-section-header">
+            Grade Sheet
+          </div>
+        </div>
+
         {/* Mobile layout view switcher */}
-        <div className="mobile-view-toggle no-print">
+        <div className="mobile-view-toggle no-print desktop-only-section">
           <button 
             type="button" 
             onClick={() => setViewMode('card')} 
@@ -223,7 +325,7 @@ export default function ResultReport({ customResult = null, onBack = null }) {
         </div>
 
         {/* Report contents */}
-        <div className="report-body">
+        <div className="report-body desktop-only-section">
           {/* Main Grade sheet table wrapped in rounded container */}
           <div className={`table-wrapper report-table-view ${viewMode === 'table' ? 'active-view' : 'hidden-view'}`}>
             <table className="manna-grid-table">
@@ -391,8 +493,200 @@ export default function ResultReport({ customResult = null, onBack = null }) {
           </div>
         </div>
 
+        {/* Mobile Accordion & Traits & Remarks Sections */}
+        <div className="mobile-only-section no-print">
+          {/* Subject Accordion list */}
+          <div className="mobile-accordion-list">
+            {activeClass.subjects && activeClass.subjects.map((subId, index) => {
+              const sub = subjects[subId] || { name: subId };
+              const score = activeResult.scores[subId] || { ca1: '-', ca2: '-', exam: '-', total: '-' };
+              const gradeInfo = score.total !== '-' ? getGradeInfo(score.total) : { grade: '-', remark: '-', color: '#64748b' };
+              const isExpanded = !!expandedSubjects[subId];
+              
+              const totalScore = parseFloat(score.total);
+              let performanceClass = 'perf-red';
+              if (!isNaN(totalScore)) {
+                if (totalScore >= 75) performanceClass = 'perf-green';
+                else if (totalScore >= 50) performanceClass = 'perf-amber';
+              } else {
+                performanceClass = 'perf-gray';
+              }
+
+              return (
+                <div key={subId} className={`accordion-item ${performanceClass} ${isExpanded ? 'active' : ''}`}>
+                  <button
+                    type="button"
+                    className="accordion-header-btn"
+                    onClick={() => toggleSubject(subId)}
+                    aria-expanded={isExpanded}
+                  >
+                    <div className="accordion-header-left">
+                      <span className="subject-index">#{index + 1}</span>
+                      <span className="subject-name">{sub.name}</span>
+                    </div>
+                    <div className="accordion-header-right">
+                      <span className="percentage-badge">{score.total !== '-' ? `${score.total}%` : '-'}</span>
+                      <span className="letter-grade-badge">{gradeInfo.grade}</span>
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2.5" 
+                        className={`chevron-icon ${isExpanded ? 'rotated' : ''}`}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </button>
+
+                  <div className={`accordion-body-panel ${isExpanded ? 'expanded' : ''}`}>
+                    <div className="accordion-scores-grid">
+                      <div className="score-detail-box">
+                        <span className="score-detail-lbl">CA 1</span>
+                        <span className="score-detail-val">{score.ca1}</span>
+                        <span className="score-detail-max">/ 20</span>
+                      </div>
+                      <div className="score-detail-box">
+                        <span className="score-detail-lbl">CA 2</span>
+                        <span className="score-detail-val">{score.ca2}</span>
+                        <span className="score-detail-max">/ 20</span>
+                      </div>
+                      <div className="score-detail-box">
+                        <span className="score-detail-lbl">Exam</span>
+                        <span className="score-detail-val">{score.exam}</span>
+                        <span className="score-detail-max">/ 60-70</span>
+                      </div>
+                    </div>
+                    <div className="accordion-remark-box">
+                      <span className="remark-title">Teacher's Remarks</span>
+                      <p className="remark-text">{gradeInfo.remark || '-'}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Development traits Sidebars */}
+          <div className="mobile-traits-section">
+            <div className="mobile-traits-card">
+              <h4 className="traits-card-header">Effective Development</h4>
+              <div className="traits-list">
+                {[
+                  { label: 'Activeness', val: activeResult.traits?.activeness },
+                  { label: 'Attendance', val: activeResult.traits?.attendance },
+                  { label: 'Punctuality', val: activeResult.traits?.punctuality },
+                  { label: 'Self Control', val: activeResult.traits?.selfControl },
+                  { label: 'Honesty', val: activeResult.traits?.honesty },
+                  { label: 'Humility', val: activeResult.traits?.humility },
+                  { label: 'Leadership', val: activeResult.traits?.leadership },
+                  { label: 'Neatness', val: activeResult.traits?.neatness },
+                  { label: 'Communication', val: activeResult.traits?.communication }
+                ].map((item) => (
+                  <div key={item.label} className="trait-row">
+                    <span className="trait-lbl">{item.label}</span>
+                    <PillRating value={item.val || 0} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mobile-traits-card">
+              <h4 className="traits-card-header">Psychomotor Skills</h4>
+              <div className="traits-list">
+                {[
+                  { label: 'Handwriting', val: activeResult.psychomotor?.handwriting },
+                  { label: 'Fluency', val: activeResult.psychomotor?.fluency },
+                  { label: 'Neatness', val: activeResult.psychomotor?.neatness }
+                ].map((item) => (
+                  <div key={item.label} className="trait-row">
+                    <span className="trait-lbl">{item.label}</span>
+                    <PillRating value={item.val || 0} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Remarks & Signatures Cards */}
+          <div className="mobile-remarks-list">
+            <div className="mobile-section-header">Remarks</div>
+
+            <div className="remarks-quote-card">
+              <div className="quote-card-header">
+                <svg className="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.19 12.07c0-2.48-.99-4.74-2.61-6.37l1.42-1.42C12.21 6.5 13.19 9.17 13.19 12.07v6.93H6.26v-6.93h4.93zm9 0c0-2.48-.99-4.74-2.61-6.37l1.42-1.42c2.21 2.21 3.19 4.88 3.19 7.78v6.93h-6.93v-6.93h4.93z"/>
+                </svg>
+                <span className="quote-author-role">Class Teacher's Remarks</span>
+              </div>
+              <p className="quote-text">
+                "{activeResult.remarks?.teacher || 'Jayden is a Jovial child but easily gets distracted.'}"
+              </p>
+              <div className="quote-card-footer">
+                <div className="author-meta">
+                  <span className="author-name">{activeResult.remarks?.teacherName || 'Miss Blessing Obaka'}</span>
+                  <span className="signature-date">{activeResult.remarks?.teacherDate || '2026-07-23'}</span>
+                </div>
+                <div className="signature-display">
+                  {activeResult.remarks?.teacherSignature ? (
+                    <img src={activeResult.remarks.teacherSignature} alt="Teacher Signature" />
+                  ) : (
+                    <span className="sig-fallback-text">{activeResult.remarks?.teacherName || 'Miss Blessing Obaka'}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="remarks-quote-card">
+              <div className="quote-card-header">
+                <svg className="quote-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M11.19 12.07c0-2.48-.99-4.74-2.61-6.37l1.42-1.42C12.21 6.5 13.19 9.17 13.19 12.07v6.93H6.26v-6.93h4.93zm9 0c0-2.48-.99-4.74-2.61-6.37l1.42-1.42c2.21 2.21 3.19 4.88 3.19 7.78v6.93h-6.93v-6.93h4.93z"/>
+                </svg>
+                <span className="quote-author-role">Principal's Remarks</span>
+              </div>
+              <p className="quote-text">
+                "{activeResult.remarks?.principal || 'A good result but keep practising. Promoted to pre-Nursery class.'}"
+              </p>
+              <div className="quote-card-footer">
+                <div className="author-meta">
+                  <span className="author-name">{activeResult.remarks?.principalName || 'Mrs Chinyere Anokam'}</span>
+                  <span className="signature-date">{activeResult.remarks?.principalDate || '2026-07-23'}</span>
+                </div>
+                <div className="signature-display">
+                  {activeResult.remarks?.principalSignature ? (
+                    <img src={activeResult.remarks.principalSignature} alt="Principal Signature" />
+                  ) : (
+                    <span className="sig-fallback-text" style={{ color: '#064e3b' }}>{activeResult.remarks?.principalName || 'Mrs Chinyere Anokam'}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Verification Box */}
+          <div className="mobile-verification-box">
+            <div className="verification-header">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="secure-icon">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span>Secure Verification Portal</span>
+            </div>
+            <div className="verification-details font-mono">
+              <div className="code-line">
+                <span className="code-lbl">Verification Code:</span>
+                <span className="code-val">MNA-MD5-{(activeResult.id).toUpperCase()}</span>
+              </div>
+              <div className="code-line">
+                <span className="code-lbl">Security Hash:</span>
+                <span className="code-val">PRINT-VALID-{new Date(activeResult.remarks?.principalDate || Date.now()).getFullYear()}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Remarks and signatures block */}
-        <div className="manna-remarks-section">
+        <div className="manna-remarks-section desktop-only-section">
           <div className="remarks-header-bar">Remarks</div>
           
           <div className="remarks-content-body">
@@ -462,7 +756,7 @@ export default function ResultReport({ customResult = null, onBack = null }) {
         </div>
 
         {/* Footer info stamp */}
-        <div className="certificate-bottom-bar font-mono">
+        <div className="certificate-bottom-bar font-mono desktop-only-section">
           <span>Verification Code: MNA-MD5-{(activeResult.id).toUpperCase()}</span>
           <span>Security Hash: PRINT-VALID-{new Date(activeResult.remarks?.principalDate || Date.now()).getFullYear()}</span>
         </div>
