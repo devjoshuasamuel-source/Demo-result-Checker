@@ -67,14 +67,20 @@ export default function ResultReport({ customResult = null, onBack = null }) {
     return 'status-accent-red';
   };
 
-  // Simple crest logo
-  const schoolLogo = (
-    <img src={ctxLogo} alt={`${schoolName} Logo`} style={{ width: '80px', height: '80px', objectFit: 'contain' }} />
-  );
+  // Format Roll / Registration Number (e.g. MA/000481)
+  const formatRegNo = (rollNo) => {
+    if (!rollNo) return '-';
+    const padded = String(rollNo).padStart(5, '0');
+    return `MA/${padded}`;
+  };
 
-  // Position badge calculation
-  const rankVal = parseInt(studentRankInfo.rank);
-  const isTopThree = !isNaN(rankVal) && rankVal >= 1 && rankVal <= 3;
+  // Shield secondary logo
+  const secondaryLogo = (
+    <img src="/logo-secondary.png" alt="Manna Crest Logo" className="logo-right-img" onError={(e) => {
+      // Fallback to primary if secondary load fails
+      e.target.src = ctxLogo;
+    }} />
+  );
 
   return (
     <div className="report-card-container">
@@ -97,48 +103,32 @@ export default function ResultReport({ customResult = null, onBack = null }) {
         </div>
       )}
 
-      <div 
-        className="report-card" 
-        style={{ 
-          fontFamily: 
-            reportCardFont === 'outfit' ? "'Outfit', sans-serif" :
-            reportCardFont === 'lora' ? "'Lora', serif" :
-            reportCardFont === 'cinzel' ? "'Cinzel', serif" :
-            reportCardFont === 'playfair' ? "'Playfair Display', serif" :
-            reportCardFont === 'raleway' ? "'Raleway', sans-serif" :
-            reportCardFont === 'baloo2' ? "'Baloo 2', sans-serif" :
-            "'Inter', sans-serif"
-        }}
-      >
+      <div className="report-card font-manna">
         {/* Header / Branding block */}
         <div className="report-header">
-          <div className="report-logo">{schoolLogo}</div>
+          <div className="report-logo">
+            <img src={ctxLogo} alt="Manna Academy Logo" className="logo-left-img" />
+          </div>
           <div className="report-school-details">
-            <h1 
-              style={{ 
-                fontFamily: 
-                  reportCardHeaderFont === 'inter' ? "'Inter', sans-serif" :
-                  reportCardHeaderFont === 'outfit' ? "'Outfit', sans-serif" :
-                  reportCardHeaderFont === 'raleway' ? "'Raleway', sans-serif" :
-                  reportCardHeaderFont === 'baloo2' ? "'Baloo 2', sans-serif" :
-                  reportCardHeaderFont === 'lora' ? "'Lora', serif" :
-                  reportCardHeaderFont === 'playfair' ? "'Playfair Display', serif" :
-                  "'Cinzel', serif",
-                fontSize: reportCardHeaderFontSize
-              }}
-            >
-              {schoolName.toUpperCase()}
-            </h1>
-            <p className="motto">{schoolMotto}</p>
-            <p className="meta">
-              {schoolAddress}
+            <h1>MANNA ACADEMY,</h1>
+            <h2 className="school-city">KADUNA</h2>
+            <p className="school-meta-address">
+              Plot C2A, Hakimi Close, off Makera-Kujama Road, Sabo G.R.A, Kaduna South, Kaduna
             </p>
-            <p className="meta" style={{ textTransform: 'uppercase', fontWeight: 700, color: '#0f1c3f', marginTop: '0.25rem' }}>
-              {activeResult.session} Academic Session • Official Termly Report
+            <p className="school-established">
+              Established in 2019
             </p>
           </div>
-          <div className="report-logo">{schoolLogo}</div>
+          <div className="report-logo">
+            {secondaryLogo}
+          </div>
         </div>
+
+        {/* Divider and centered student name */}
+        <div className="header-divider"></div>
+        <h2 className="student-header-title">
+          {student.name ? student.name.toUpperCase() : '-'}
+        </h2>
 
         {/* Student identity block */}
         <div className="report-identity">
@@ -154,73 +144,58 @@ export default function ResultReport({ customResult = null, onBack = null }) {
             )}
           </div>
 
-          <div className="identity-details-grid">
-            <div className="identity-field">
-              <div className="label">Student Name</div>
-              <div className="value" style={{ textTransform: 'uppercase' }}>{student.name || '-'}</div>
-            </div>
-            <div className="identity-field">
-              <div className="label">Roll Number</div>
-              <div className="value">{student.rollNo || '-'}</div>
-            </div>
-            <div className="identity-field">
-              <div className="label">Class / Form</div>
-              <div className="value" style={{ textTransform: 'uppercase' }}>{activeClass.name || '-'}</div>
-            </div>
-            <div className="identity-field">
-              <div className="label">Date of Birth</div>
-              <div className="value">{student.dob || '-'}</div>
-            </div>
-            <div className="identity-field">
-              <div className="label">Father's Name</div>
-              <div className="value">{student.fatherName || '-'}</div>
-            </div>
-            <div className="identity-field">
-              <div className="label">Mother's Name</div>
-              <div className="value">{student.motherName || '-'}</div>
-            </div>
-            <div className="identity-field">
-              <div className="label">Academic Term</div>
-              <div className="value">{activeResult.term}</div>
-            </div>
-            <div className="identity-field">
-              <div className="label">Academic Session</div>
-              <div className="value">{activeResult.session || '-'}</div>
-            </div>
-            <div className="identity-field">
-              <div className="label">Class Position</div>
-              <div className="value">
-                <span className={isTopThree ? 'position-badge-top' : 'position-badge-neutral'}>
-                  {getOrdinal(studentRankInfo.rank)}
-                </span>
-              </div>
-            </div>
+          <div className="student-top-details">
+            <div className="detail-line"><span className="detail-label">Name</span><span className="detail-dots">:</span><span className="detail-val text-uppercase">{student.name || '-'}</span></div>
+            <div className="detail-line"><span className="detail-label">Class</span><span className="detail-dots">:</span><span className="detail-val text-uppercase">{activeClass.name || '-'}</span></div>
+            <div className="detail-line"><span className="detail-label">Roll No</span><span className="detail-dots">:</span><span className="detail-val">{String(student.rollNo || '-').padStart(5, '0')}</span></div>
+            <div className="detail-line"><span className="detail-label">Regi No</span><span className="detail-dots">:</span><span className="detail-val">{formatRegNo(student.rollNo)}</span></div>
+            <div className="detail-line"><span className="detail-label">Exam</span><span className="detail-dots">:</span><span className="detail-val">{activeResult.term} Result</span></div>
           </div>
+        </div>
+
+        {/* Identity Grid Table */}
+        <div className="identity-table-wrapper">
+          <table className="identity-table-grid">
+            <tbody>
+              <tr>
+                <td className="grid-label">Name of Student</td>
+                <td className="grid-val text-uppercase">{student.name || '-'}</td>
+                <td className="grid-label">Admission No</td>
+                <td className="grid-val">{formatRegNo(student.rollNo)}</td>
+              </tr>
+              <tr>
+                <td className="grid-label">Date of Birth</td>
+                <td className="grid-val">{student.dob || '-'}</td>
+                <td className="grid-label">Father's Name</td>
+                <td className="grid-val">{student.fatherName || '-'}</td>
+              </tr>
+              <tr>
+                <td className="grid-label">Mother's Name</td>
+                <td className="grid-val">{student.motherName || '-'}</td>
+                <td className="grid-label">Class</td>
+                <td className="grid-val text-uppercase">{activeClass.name || '-'}</td>
+              </tr>
+              <tr>
+                <td className="grid-label">Year</td>
+                <td className="grid-val" colSpan="3">{activeResult.session || '-'} Academic Session</td>
+              </tr>
+              <tr>
+                <td className="grid-label">Total Marks Obtainable</td>
+                <td className="grid-val">{totalObtainable}</td>
+                <td className="grid-label">Total Marks Obtained</td>
+                <td className="grid-val">{studentRankInfo.totalScore}</td>
+              </tr>
+              <tr>
+                <td className="grid-label">Average</td>
+                <td className="grid-val" colSpan="3">{studentRankInfo.average}%</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         {/* Section divider banner */}
-        <div className="section-banner">
+        <div className="section-banner-centered">
           Grade Sheet
-        </div>
-
-        {/* Academic statistics summary strip */}
-        <div className="report-stats-strip">
-          <div className="stat-strip-item">
-            <span>Obtainable Marks</span>
-            <strong>{totalObtainable}</strong>
-          </div>
-          <div className="stat-strip-item">
-            <span>Marks Obtained</span>
-            <strong className={getPerformanceClass(studentRankInfo.average)}>{studentRankInfo.totalScore}</strong>
-          </div>
-          <div className="stat-strip-item">
-            <span>Student Average</span>
-            <strong className={getPerformanceClass(studentRankInfo.average)}>{studentRankInfo.average}%</strong>
-          </div>
-          <div className="stat-strip-item">
-            <span>Compilation Status</span>
-            <strong>FINAL</strong>
-          </div>
         </div>
 
         {/* Mobile layout view switcher */}
@@ -251,17 +226,23 @@ export default function ResultReport({ customResult = null, onBack = null }) {
         <div className="report-body">
           {/* Main Grade sheet table wrapped in rounded container */}
           <div className={`table-wrapper report-table-view ${viewMode === 'table' ? 'active-view' : 'hidden-view'}`}>
-            <table className="school-grid-table">
+            <table className="manna-grid-table">
               <thead>
                 <tr>
-                  <th style={{ width: '45px' }}>No.</th>
-                  <th style={{ textAlign: 'left' }}>Subject</th>
-                  <th style={{ width: '75px' }}>CA 1 (20%)</th>
-                  <th style={{ width: '75px' }}>CA 2 (20%)</th>
-                  <th style={{ width: '75px' }}>Exam (60%)</th>
-                  <th style={{ width: '85px' }}>Total (100%)</th>
-                  <th style={{ width: '75px' }}>Grade</th>
-                  <th style={{ width: '130px' }}>Remarks</th>
+                  <th style={{ width: '45px' }} rowspan="2">No.</th>
+                  <th style={{ textAlign: 'left' }} rowspan="2">Subject</th>
+                  <th style={{ width: '85px' }}>CA 1</th>
+                  <th style={{ width: '85px' }}>CA 2</th>
+                  <th style={{ width: '85px' }}>Exams</th>
+                  <th style={{ width: '85px' }}>Total</th>
+                  <th>Teacher's Remarks</th>
+                </tr>
+                <tr className="sub-headers">
+                  <th>15/20%</th>
+                  <th>15/20%</th>
+                  <th>60/70%</th>
+                  <th>100%</th>
+                  <th>Subject Performance</th>
                 </tr>
               </thead>
               <tbody>
@@ -270,46 +251,15 @@ export default function ResultReport({ customResult = null, onBack = null }) {
                   const score = activeResult.scores[subId] || { ca1: '-', ca2: '-', exam: '-', total: '-' };
                   const gradeInfo = score.total !== '-' ? getGradeInfo(score.total) : { grade: '-', remark: '-', color: '#64748b' };
                   
-                  // Grade Based Coloring classes & soft badges
-                  let rowClass = '';
-                  let pillClass = '';
-
-                  const g = gradeInfo.grade.toUpperCase();
-                  if (g.startsWith('A')) {
-                    rowClass = 'row-tint-excellent';
-                    pillClass = 'badge-excellent';
-                  } else if (g.startsWith('B')) {
-                    rowClass = 'row-tint-verygood';
-                    pillClass = 'badge-verygood';
-                  } else if (g.startsWith('C')) {
-                    rowClass = 'row-tint-credit';
-                    pillClass = 'badge-credit';
-                  } else if (g.startsWith('D') || g.startsWith('E')) {
-                    rowClass = ''; // Weak pass gets no row tint
-                    pillClass = 'badge-weakpass';
-                  } else if (g.startsWith('F')) {
-                    rowClass = 'row-tint-fail';
-                    pillClass = 'badge-fail';
-                  }
-
                   return (
-                    <tr key={subId} className={rowClass}>
+                    <tr key={subId}>
                       <td>{index + 1}</td>
                       <td className="subject-name">{sub.name}</td>
                       <td>{score.ca1}</td>
                       <td>{score.ca2}</td>
                       <td>{score.exam}</td>
-                      <td className="bold-highlight" style={{ fontSize: '0.9rem' }}>{score.total}</td>
-                      <td>
-                        <span className={`grade-pill-badge ${pillClass}`}>
-                          {gradeInfo.grade}
-                        </span>
-                      </td>
-                      <td>
-                        <span className={`grade-pill-badge ${pillClass}`} style={{ minWidth: 'auto', display: 'inline-block' }}>
-                          {gradeInfo.remark}
-                        </span>
-                      </td>
+                      <td className="bold-highlight">{score.total}</td>
+                      <td className="remark-text-cell">{gradeInfo.remark}</td>
                     </tr>
                   );
                 })}
@@ -324,27 +274,8 @@ export default function ResultReport({ customResult = null, onBack = null }) {
               const score = activeResult.scores[subId] || { ca1: '-', ca2: '-', exam: '-', total: '-' };
               const gradeInfo = score.total !== '-' ? getGradeInfo(score.total) : { grade: '-', remark: '-', color: '#64748b' };
               
-              let pillClass = '';
-              let cardTintClass = '';
-              const g = gradeInfo.grade.toUpperCase();
-              if (g.startsWith('A')) {
-                cardTintClass = 'card-tint-excellent';
-                pillClass = 'badge-excellent';
-              } else if (g.startsWith('B')) {
-                cardTintClass = 'card-tint-verygood';
-                pillClass = 'badge-verygood';
-              } else if (g.startsWith('C')) {
-                cardTintClass = 'card-tint-credit';
-                pillClass = 'badge-credit';
-              } else if (g.startsWith('D') || g.startsWith('E')) {
-                pillClass = 'badge-weakpass';
-              } else if (g.startsWith('F')) {
-                cardTintClass = 'card-tint-fail';
-                pillClass = 'badge-fail';
-              }
-
               return (
-                <div key={subId} className={`subject-card ${cardTintClass}`}>
+                <div key={subId} className="subject-card">
                   <div className="subject-card-header">
                     <span className="subject-card-index">#{index + 1}</span>
                     <h4 className="subject-card-name">{sub.name}</h4>
@@ -352,31 +283,27 @@ export default function ResultReport({ customResult = null, onBack = null }) {
                   
                   <div className="subject-card-scores">
                     <div className="score-row">
-                      <span className="score-label">CA 1 (20%)</span>
+                      <span className="score-label">CA 1 (15/20%)</span>
                       <span className="score-value">{score.ca1}</span>
                     </div>
                     <div className="score-row">
-                      <span className="score-label">CA 2 (20%)</span>
+                      <span className="score-label">CA 2 (15/20%)</span>
                       <span className="score-value">{score.ca2}</span>
                     </div>
                     <div className="score-row">
-                      <span className="score-label">Exam (60%)</span>
+                      <span className="score-label">Exam (60/70%)</span>
                       <span className="score-value">{score.exam}</span>
                     </div>
                     <div className="score-row total-highlight">
-                      <span className="score-label">Total Score</span>
+                      <span className="score-label">Total Score (100%)</span>
                       <span className="score-value bold-highlight">{score.total}</span>
                     </div>
                   </div>
                   
                   <div className="subject-card-footer">
                     <div className="badge-wrapper">
-                      <span className="badge-title">Grade</span>
-                      <span className={`grade-pill-badge ${pillClass}`}>{gradeInfo.grade}</span>
-                    </div>
-                    <div className="badge-wrapper">
-                      <span className="badge-title">Remarks</span>
-                      <span className={`grade-pill-badge ${pillClass}`}>{gradeInfo.remark}</span>
+                      <span className="badge-title">Teacher's Remarks</span>
+                      <span className="remark-text-val">{gradeInfo.remark}</span>
                     </div>
                   </div>
                 </div>
@@ -385,157 +312,157 @@ export default function ResultReport({ customResult = null, onBack = null }) {
           </div>
 
           {/* Development traits Sidebars */}
-          <div className="traits-sidebar">
+          <div className="traits-layout-grid">
             {/* Effective Development ratings */}
-            <div className="traits-group">
-              <h3>Affective Traits</h3>
-              <div className="traits-group-body">
-                <div className="trait-row">
-                  <span className="trait-name">Activeness</span>
-                  <span className="trait-number-rating">{activeResult.traits?.activeness || 0}</span>
+            <div className="traits-block-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Effective Development</th>
+                    <th style={{ width: '80px' }}>Rating</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="trait-item-row">
+                    <td>Activeness</td>
+                    <td className="rating-val">{activeResult.traits?.activeness || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Attendance</td>
+                    <td className="rating-val">{activeResult.traits?.attendance || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Punctuality</td>
+                    <td className="rating-val">{activeResult.traits?.punctuality || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Self Control</td>
+                    <td className="rating-val">{activeResult.traits?.selfControl || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Honesty</td>
+                    <td className="rating-val">{activeResult.traits?.honesty || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Humility</td>
+                    <td className="rating-val">{activeResult.traits?.humility || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Leadership</td>
+                    <td className="rating-val">{activeResult.traits?.leadership || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Neatness</td>
+                    <td className="rating-val">{activeResult.traits?.neatness || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Communication</td>
+                    <td className="rating-val">{activeResult.traits?.communication || 0}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Psychomotor ratings */}
+            <div className="traits-block-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Psychomotor Skills</th>
+                    <th style={{ width: '80px' }}>Rating</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="trait-item-row">
+                    <td>Handwriting</td>
+                    <td className="rating-val">{activeResult.psychomotor?.handwriting || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Fluency</td>
+                    <td className="rating-val">{activeResult.psychomotor?.fluency || 0}</td>
+                  </tr>
+                  <tr className="trait-item-row">
+                    <td>Neatness</td>
+                    <td className="rating-val">{activeResult.psychomotor?.neatness || 0}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        {/* Remarks and signatures block */}
+        <div className="manna-remarks-section">
+          <div className="remarks-header-bar">Remarks</div>
+          
+          <div className="remarks-content-body">
+            {/* Teacher Remarks Row */}
+            <div className="remarks-row">
+              <div className="remarks-label-block">
+                <span className="bold-lbl">Master/Mistress Remarks:</span>
+                <span className="remark-val-text">
+                  {activeResult.remarks?.teacher || 'Jayden is a Jovial child but easily gets distracted.'}
+                </span>
+              </div>
+              <div className="signatures-grid-row">
+                <div className="sig-meta-col">
+                  <span className="sig-lbl">Name:</span>
+                  <span className="sig-val">{activeResult.remarks?.teacherName || 'Miss Blessing Obaka'}</span>
                 </div>
-                <div className="trait-row">
-                  <span className="trait-name">Attendance</span>
-                  <span className="trait-number-rating">{activeResult.traits?.attendance || 0}</span>
+                <div className="sig-meta-col flex-center-sig">
+                  <span className="sig-lbl">Signature:</span>
+                  <div className="signature-box-img">
+                    {activeResult.remarks?.teacherSignature ? (
+                      <img src={activeResult.remarks.teacherSignature} alt="Teacher Signature" />
+                    ) : (
+                      <span className="sig-fallback-text">{activeResult.remarks?.teacherName || 'Miss Blessing Obaka'}</span>
+                    )}
+                  </div>
                 </div>
-                <div className="trait-row">
-                  <span className="trait-name">Punctuality</span>
-                  <span className="trait-number-rating">{activeResult.traits?.punctuality || 0}</span>
-                </div>
-                <div className="trait-row">
-                  <span className="trait-name">Self Control</span>
-                  <span className="trait-number-rating">{activeResult.traits?.selfControl || 0}</span>
-                </div>
-                <div className="trait-row">
-                  <span className="trait-name">Honesty</span>
-                  <span className="trait-number-rating">{activeResult.traits?.honesty || 0}</span>
-                </div>
-                <div className="trait-row">
-                  <span className="trait-name">Humility</span>
-                  <span className="trait-number-rating">{activeResult.traits?.humility || 0}</span>
-                </div>
-                <div className="trait-row">
-                  <span className="trait-name">Leadership</span>
-                  <span className="trait-number-rating">{activeResult.traits?.leadership || 0}</span>
-                </div>
-                <div className="trait-row">
-                  <span className="trait-name">Neatness</span>
-                  <span className="trait-number-rating">{activeResult.traits?.neatness || 0}</span>
-                </div>
-                <div className="trait-row">
-                  <span className="trait-name">Communication</span>
-                  <span className="trait-number-rating">{activeResult.traits?.communication || 0}</span>
+                <div className="sig-meta-col">
+                  <span className="sig-lbl">Date:</span>
+                  <span className="sig-val">{activeResult.remarks?.teacherDate || '2026-07-23'}</span>
                 </div>
               </div>
             </div>
 
-            {/* Psychomotor ratings */}
-            <div className="traits-group">
-              <h3>Psychomotor Skills</h3>
-              <div className="traits-group-body">
-                <div className="trait-row">
-                  <span className="trait-name">Handwriting</span>
-                  <span className="trait-number-rating">{activeResult.psychomotor?.handwriting || 0}</span>
+            {/* Divider between teacher and principal */}
+            <div className="remarks-divider-line"></div>
+
+            {/* Principal Remarks Row */}
+            <div className="remarks-row">
+              <div className="remarks-label-block">
+                <span className="bold-lbl">Principal's Remarks:</span>
+                <span className="remark-val-text">
+                  {activeResult.remarks?.principal || 'A good result but keep practising. Promoted to pre-Nursery class.'}
+                </span>
+              </div>
+              <div className="signatures-grid-row">
+                <div className="sig-meta-col">
+                  <span className="sig-lbl">Name of Principal:</span>
+                  <span className="sig-val">{activeResult.remarks?.principalName || 'Mrs Chinyere Anokam'}</span>
                 </div>
-                <div className="trait-row">
-                  <span className="trait-name">Fluency</span>
-                  <span className="trait-number-rating">{activeResult.psychomotor?.fluency || 0}</span>
+                <div className="sig-meta-col flex-center-sig">
+                  <span className="sig-lbl">Signature:</span>
+                  <div className="signature-box-img">
+                    {activeResult.remarks?.principalSignature ? (
+                      <img src={activeResult.remarks.principalSignature} alt="Principal Signature" />
+                    ) : (
+                      <span className="sig-fallback-text" style={{ color: '#064e3b' }}>{activeResult.remarks?.principalName || 'Mrs Chinyere Anokam'}</span>
+                    )}
+                  </div>
                 </div>
-                <div className="trait-row">
-                  <span className="trait-name">Neatness</span>
-                  <span className="trait-number-rating">{activeResult.psychomotor?.neatness || 0}</span>
+                <div className="sig-meta-col">
+                  <span className="sig-lbl">Date:</span>
+                  <span className="sig-val">{activeResult.remarks?.principalDate || '2026-07-23'}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Remarks and signatures block wrapped in rounded container */}
-        <div className="remarks-table-wrapper">
-          <table className="remarks-table">
-            <thead>
-              <tr>
-                <th colSpan="4">Remarks</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Row 1: Teacher's Remarks */}
-              <tr>
-                <td colSpan="4">
-                  <span className="remark-label">Master/Mistress Remarks:</span>
-                  <span className="remark-val">
-                    {activeResult.remarks?.teacher || 'Compiling student feedback remarks...'}
-                  </span>
-                </td>
-              </tr>
-
-              {/* Row 2: Teacher details */}
-              <tr>
-                <td className="detail-name-col">
-                  <span className="detail-label">Name:</span>
-                  <span className="detail-val">{activeResult.remarks?.teacherName || 'Emily Cole'}</span>
-                </td>
-                <td className="detail-sig-label-col">
-                  <span className="detail-label">Signature:</span>
-                </td>
-                <td className="detail-sig-val-col">
-                  <div className="sig-container">
-                    {activeResult.remarks?.teacherSignature ? (
-                      <img src={activeResult.remarks.teacherSignature} alt="Teacher Signature" />
-                    ) : (
-                      <span className="sig-fallback">
-                        {activeResult.remarks?.teacherName || 'Emily Cole'}
-                      </span>
-                    )}
-                  </div>
-                </td>
-                <td className="detail-date-col">
-                  <span className="detail-label">Date:</span>
-                  <span className="detail-val">{activeResult.remarks?.teacherDate || '-'}</span>
-                </td>
-              </tr>
-
-              {/* Row 3: Principal's Remarks */}
-              <tr>
-                <td colSpan="4">
-                  <span className="remark-label">Principal's Remarks:</span>
-                  <span className="remark-val">
-                    {activeResult.remarks?.principal || 'Awaiting Principal Review...'}
-                  </span>
-                </td>
-              </tr>
-
-              {/* Row 4: Principal details */}
-              <tr>
-                <td className="detail-name-col">
-                  <span className="detail-label">Name of Principal:</span>
-                  <span className="detail-val">{activeResult.remarks?.principalName || 'Dr. Joseph Alao'}</span>
-                </td>
-                <td className="detail-sig-label-col">
-                  <span className="detail-label">Signature:</span>
-                </td>
-                <td className="detail-sig-val-col">
-                  <div className="sig-container">
-                    {activeResult.remarks?.principalSignature ? (
-                      <img src={activeResult.remarks.principalSignature} alt="Principal Signature" />
-                    ) : (
-                      <span className="sig-fallback" style={{ color: '#064e3b' }}>
-                        {activeResult.remarks?.principalName || 'Dr. Joseph Alao'}
-                      </span>
-                    )}
-                  </div>
-                </td>
-                <td className="detail-date-col">
-                  <span className="detail-label">Date:</span>
-                  <span className="detail-val">{activeResult.remarks?.principalDate || '-'}</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
         {/* Footer info stamp */}
-        <div className="certificate-bottom-bar">
+        <div className="certificate-bottom-bar font-mono">
           <span>Verification Code: MNA-MD5-{(activeResult.id).toUpperCase()}</span>
           <span>Security Hash: PRINT-VALID-{new Date(activeResult.remarks?.principalDate || Date.now()).getFullYear()}</span>
         </div>

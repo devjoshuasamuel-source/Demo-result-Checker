@@ -1,0 +1,579 @@
+{
+  "settings": [
+    {
+      "id": 1,
+      "school_name": "Manna Academy",
+      "school_subtitle": "Kaduna",
+      "school_logo": "/logo.png",
+      "school_motto": "Established in 2019",
+      "school_address": "Plot C2A, Hakimi Close, off Makera-Kujama Road, Sabo G.R.A, Kaduna South, Kaduna",
+      "report_card_font": "inter",
+      "report_card_header_font": "cinzel",
+      "report_card_header_font_size": "2rem",
+      "admin_name": "Mrs Chinyere Anokam",
+      "admin_email": "admin@mannaacademy.sch.ng",
+      "admin_password": "admin123",
+      "admin_avatar": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231e3a8a'/><circle cx='50' cy='40' r='20' fill='%23ffffff'/><path d='M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z' fill='%23ffffff'/></svg>",
+      "current_session": "2025/2026",
+      "current_term": "3rd Term",
+      "allow_student_reg": true,
+      "maintenance_mode": false,
+      "grading_scale": [
+        {
+          "grade": "A1",
+          "min": 75,
+          "max": 100,
+          "remark": "Excellent",
+          "color": "var(--success)"
+        },
+        {
+          "grade": "B2",
+          "min": 70,
+          "max": 74,
+          "remark": "Very Good",
+          "color": "var(--success)"
+        },
+        {
+          "grade": "B3",
+          "min": 65,
+          "max": 69,
+          "remark": "Good",
+          "color": "var(--success)"
+        },
+        {
+          "grade": "C4",
+          "min": 60,
+          "max": 64,
+          "remark": "Credit",
+          "color": "var(--success)"
+        },
+        {
+          "grade": "C5",
+          "min": 55,
+          "max": 59,
+          "remark": "Credit",
+          "color": "var(--success)"
+        },
+        {
+          "grade": "C6",
+          "min": 50,
+          "max": 54,
+          "remark": "Credit",
+          "color": "var(--success)"
+        },
+        {
+          "grade": "D7",
+          "min": 45,
+          "max": 49,
+          "remark": "Pass",
+          "color": "var(--warning)"
+        },
+        {
+          "grade": "E8",
+          "min": 40,
+          "max": 44,
+          "remark": "Pass",
+          "color": "var(--warning)"
+        },
+        {
+          "grade": "F9",
+          "min": 0,
+          "max": 39,
+          "remark": "Fail",
+          "color": "var(--danger)"
+        }
+      ]
+    }
+  ],
+  "classes": [
+    {
+      "id": "jss1",
+      "name": "JSS 1",
+      "base_name": "JSS 1",
+      "arm": "",
+      "subjects": [
+        "math",
+        "eng",
+        "basic_sci",
+        "civic_edu",
+        "agric_sci"
+      ]
+    },
+    {
+      "id": "jss2",
+      "name": "JSS 2",
+      "base_name": "JSS 2",
+      "arm": "",
+      "subjects": [
+        "math",
+        "eng",
+        "basic_sci",
+        "civic_edu",
+        "intro_tech"
+      ]
+    },
+    {
+      "id": "sss1",
+      "name": "SSS 1",
+      "base_name": "SSS 1",
+      "arm": "",
+      "subjects": [
+        "math",
+        "eng",
+        "physics",
+        "chemistry",
+        "biology",
+        "civic_edu"
+      ]
+    },
+    {
+      "id": "sss2",
+      "name": "SSS 2",
+      "base_name": "SSS 2",
+      "arm": "",
+      "subjects": [
+        "math",
+        "eng",
+        "physics",
+        "chemistry",
+        "biology",
+        "geography"
+      ]
+    }
+  ],
+  "subjects": [
+    {
+      "id": "math",
+      "name": "Mathematics",
+      "default_teacher": "Miss Blessing Obaka"
+    },
+    {
+      "id": "eng",
+      "name": "English Language",
+      "default_teacher": "Mr. David Vance"
+    },
+    {
+      "id": "basic_sci",
+      "name": "Basic Science",
+      "default_teacher": "Dr. John Okoye"
+    },
+    {
+      "id": "civic_edu",
+      "name": "Civic Education",
+      "default_teacher": "Mrs. Sarah Adeleke"
+    },
+    {
+      "id": "agric_sci",
+      "name": "Agricultural Science",
+      "default_teacher": "Mr. Ibrahim Yusuf"
+    },
+    {
+      "id": "intro_tech",
+      "name": "Introductory Technology",
+      "default_teacher": "Mr. Samuel Bello"
+    },
+    {
+      "id": "physics",
+      "name": "Physics",
+      "default_teacher": "Dr. John Okoye"
+    },
+    {
+      "id": "chemistry",
+      "name": "Chemistry",
+      "default_teacher": "Mrs. Blessing Benson"
+    },
+    {
+      "id": "biology",
+      "name": "Biology",
+      "default_teacher": "Mrs. Sarah Adeleke"
+    },
+    {
+      "id": "geography",
+      "name": "Geography",
+      "default_teacher": "Mr. Ibrahim Yusuf"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "t1",
+      "name": "Miss Blessing Obaka",
+      "email": "blessing.obaka@mannaacademy.sch.ng",
+      "password": "password123",
+      "assigned_class": "jss1",
+      "subjects": [
+        "math"
+      ],
+      "photo": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%234f46e5\"/><circle cx=\"50\" cy=\"40\" r=\"20\" fill=\"%23ffffff\"/><path d=\"M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z\" fill=\"%23ffffff\"/></svg>"
+    },
+    {
+      "id": "t2",
+      "name": "Mr. David Vance",
+      "email": "david.vance@mannaacademy.sch.ng",
+      "password": "password123",
+      "assigned_class": "sss1",
+      "subjects": [
+        "eng"
+      ],
+      "photo": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23059669\"/><circle cx=\"50\" cy=\"40\" r=\"20\" fill=\"%23ffffff\"/><path d=\"M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z\" fill=\"%23ffffff\"/></svg>"
+    },
+    {
+      "id": "t3",
+      "name": "Dr. John Okoye",
+      "email": "john.okoye@mannaacademy.sch.ng",
+      "password": "password123",
+      "assigned_class": "sss2",
+      "subjects": [
+        "physics",
+        "basic_sci"
+      ],
+      "photo": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23db2777\"/><circle cx=\"50\" cy=\"40\" r=\"20\" fill=\"%23ffffff\"/><path d=\"M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z\" fill=\"%23ffffff\"/></svg>"
+    },
+    {
+      "id": "t4",
+      "name": "Mrs. Blessing Benson",
+      "email": "blessing.b@mannaacademy.sch.ng",
+      "password": "password123",
+      "assigned_class": "sss1",
+      "subjects": [
+        "chemistry"
+      ],
+      "photo": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23ea580c\"/><circle cx=\"50\" cy=\"40\" r=\"20\" fill=\"%23ffffff\"/><path d=\"M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z\" fill=\"%23ffffff\"/></svg>"
+    }
+  ],
+  "students": [
+    {
+      "id": "std1",
+      "name": "Adegoke Samson",
+      "class_id": "jss1",
+      "roll_no": 481,
+      "dob": "2014-06-15",
+      "father_name": "Mr. Ezekiel Adegoke",
+      "mother_name": "Mrs. Victoria Adegoke",
+      "parent_contact": "",
+      "photo": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%234f46e5\"/><circle cx=\"50\" cy=\"40\" r=\"20\" fill=\"%23ffffff\"/><path d=\"M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z\" fill=\"%23ffffff\"/></svg>",
+      "active": true
+    },
+    {
+      "id": "std2",
+      "name": "Chinedu Eze",
+      "class_id": "jss1",
+      "roll_no": 724,
+      "dob": "2013-11-20",
+      "father_name": "Mr. Julius Eze",
+      "mother_name": "Mrs. Florence Eze",
+      "parent_contact": "",
+      "photo": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23059669\"/><circle cx=\"50\" cy=\"40\" r=\"20\" fill=\"%23ffffff\"/><path d=\"M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z\" fill=\"%23ffffff\"/></svg>",
+      "active": true
+    },
+    {
+      "id": "std3",
+      "name": "Fatima Abubakar",
+      "class_id": "jss1",
+      "roll_no": 119,
+      "dob": "2014-03-08",
+      "father_name": "Mr. Abubakar Kabir",
+      "mother_name": "Mrs. Aisha Abubakar",
+      "parent_contact": "",
+      "photo": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23db2777\"/><circle cx=\"50\" cy=\"40\" r=\"20\" fill=\"%23ffffff\"/><path d=\"M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z\" fill=\"%23ffffff\"/></svg>",
+      "active": true
+    },
+    {
+      "id": "std4",
+      "name": "Okonkwo Emeka",
+      "class_id": "sss1",
+      "roll_no": 890,
+      "dob": "2011-09-12",
+      "father_name": "Mr. Gregory Okonkwo",
+      "mother_name": "Mrs. Stella Okonkwo",
+      "parent_contact": "",
+      "photo": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23ea580c\"/><circle cx=\"50\" cy=\"40\" r=\"20\" fill=\"%23ffffff\"/><path d=\"M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z\" fill=\"%23ffffff\"/></svg>",
+      "active": true
+    },
+    {
+      "id": "std5",
+      "name": "Balogun Elizabeth",
+      "class_id": "sss1",
+      "roll_no": 335,
+      "dob": "2012-01-25",
+      "father_name": "Mr. Samuel Balogun",
+      "mother_name": "Mrs. Janet Balogun",
+      "parent_contact": "",
+      "photo": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%23db2777\"/><circle cx=\"50\" cy=\"40\" r=\"20\" fill=\"%23ffffff\"/><path d=\"M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z\" fill=\"%23ffffff\"/></svg>",
+      "active": true
+    }
+  ],
+  "results": [
+    {
+      "id": "res_std1_jss1",
+      "student_id": "std1",
+      "class_id": "jss1",
+      "term": "3rd Term",
+      "session": "2025/2026",
+      "status": "published",
+      "scores": {
+        "math": {
+          "ca1": 18,
+          "ca2": 17,
+          "exam": 54,
+          "total": 89
+        },
+        "eng": {
+          "ca1": 15,
+          "ca2": 16,
+          "exam": 48,
+          "total": 79
+        },
+        "basic_sci": {
+          "ca1": 14,
+          "ca2": 14,
+          "exam": 42,
+          "total": 70
+        },
+        "civic_edu": {
+          "ca1": 19,
+          "ca2": 18,
+          "exam": 58,
+          "total": 95
+        },
+        "agric_sci": {
+          "ca1": 12,
+          "ca2": 15,
+          "exam": 38,
+          "total": 65
+        }
+      },
+      "traits": {
+        "activeness": 5,
+        "attendance": 5,
+        "punctuality": 4,
+        "selfControl": 4,
+        "honesty": 5,
+        "humility": 5,
+        "leadership": 4,
+        "neatness": 5,
+        "communication": 4
+      },
+      "psychomotor": {
+        "handwriting": 4,
+        "fluency": 5,
+        "neatness": 4
+      },
+      "remarks": {
+        "teacher": "Adegoke is an exceptional student. His academic enthusiasm and neatness are outstanding. Keep up the high standard.",
+        "teacherName": "Miss Blessing Obaka",
+        "teacherSignature": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"150\" height=\"50\" viewBox=\"0 0 150 50\"><path d=\"M10,35 Q30,10 50,30 T90,20 T130,30\" fill=\"none\" stroke=\"%231e3a8a\" stroke-width=\"2\" stroke-linecap=\"round\"/><text x=\"15\" y=\"45\" font-family=\"cursive\" font-size=\"10\" fill=\"%231e3a8a\">Miss Blessing Obaka</text></svg>",
+        "teacherDate": "2026-07-28",
+        "principal": "A stellar academic performance. Promoted to JSS 2 with honors.",
+        "principalName": "Mrs Chinyere Anokam",
+        "principalSignature": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"150\" height=\"50\" viewBox=\"0 0 150 50\"><path d=\"M15,25 C25,10 40,40 55,25 S80,10 100,25 S125,15 135,35\" fill=\"none\" stroke=\"%23064e3b\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><text x=\"15\" y=\"45\" font-family=\"cursive\" font-size=\"11\" fill=\"%23064e3b\">Mrs Chinyere Anokam</text></svg>",
+        "principalDate": "2026-07-30"
+      }
+    },
+    {
+      "id": "res_std2_jss1",
+      "student_id": "std2",
+      "class_id": "jss1",
+      "term": "3rd Term",
+      "session": "2025/2026",
+      "status": "published",
+      "scores": {
+        "math": {
+          "ca1": 12,
+          "ca2": 11,
+          "exam": 35,
+          "total": 58
+        },
+        "eng": {
+          "ca1": 14,
+          "ca2": 13,
+          "exam": 40,
+          "total": 67
+        },
+        "basic_sci": {
+          "ca1": 10,
+          "ca2": 12,
+          "exam": 32,
+          "total": 54
+        },
+        "civic_edu": {
+          "ca1": 15,
+          "ca2": 14,
+          "exam": 45,
+          "total": 74
+        },
+        "agric_sci": {
+          "ca1": 11,
+          "ca2": 10,
+          "exam": 30,
+          "total": 51
+        }
+      },
+      "traits": {
+        "activeness": 4,
+        "attendance": 4,
+        "punctuality": 3,
+        "selfControl": 3,
+        "honesty": 4,
+        "humility": 4,
+        "leadership": 3,
+        "neatness": 4,
+        "communication": 3
+      },
+      "psychomotor": {
+        "handwriting": 3,
+        "fluency": 4,
+        "neatness": 3
+      },
+      "remarks": {
+        "teacher": "Chinedu has shown satisfactory progress this term. More effort is needed in Mathematics and Sciences.",
+        "teacherName": "Miss Blessing Obaka",
+        "teacherSignature": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"150\" height=\"50\" viewBox=\"0 0 150 50\"><path d=\"M10,35 Q30,10 50,30 T90,20 T130,30\" fill=\"none\" stroke=\"%231e3a8a\" stroke-width=\"2\" stroke-linecap=\"round\"/><text x=\"15\" y=\"45\" font-family=\"cursive\" font-size=\"10\" fill=\"%231e3a8a\">Miss Blessing Obaka</text></svg>",
+        "teacherDate": "2026-07-28",
+        "principal": "Good results. Promoted to JSS 2.",
+        "principalName": "Mrs Chinyere Anokam",
+        "principalSignature": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"150\" height=\"50\" viewBox=\"0 0 150 50\"><path d=\"M15,25 C25,10 40,40 55,25 S80,10 100,25 S125,15 135,35\" fill=\"none\" stroke=\"%23064e3b\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><text x=\"15\" y=\"45\" font-family=\"cursive\" font-size=\"11\" fill=\"%23064e3b\">Mrs Chinyere Anokam</text></svg>",
+        "principalDate": "2026-07-30"
+      }
+    },
+    {
+      "id": "res_std3_jss1",
+      "student_id": "std3",
+      "class_id": "jss1",
+      "term": "3rd Term",
+      "session": "2025/2026",
+      "status": "draft",
+      "scores": {
+        "math": {
+          "ca1": 19,
+          "ca2": 19,
+          "exam": 58,
+          "total": 96
+        },
+        "eng": {
+          "ca1": 17,
+          "ca2": 18,
+          "exam": 52,
+          "total": 87
+        },
+        "basic_sci": {
+          "ca1": 16,
+          "ca2": 17,
+          "exam": 49,
+          "total": 82
+        },
+        "civic_edu": {
+          "ca1": 18,
+          "ca2": 19,
+          "exam": 56,
+          "total": 93
+        },
+        "agric_sci": {
+          "ca1": 15,
+          "ca2": 16,
+          "exam": 45,
+          "total": 76
+        }
+      },
+      "traits": {
+        "activeness": 5,
+        "attendance": 5,
+        "punctuality": 5,
+        "selfControl": 5,
+        "honesty": 5,
+        "humility": 5,
+        "leadership": 5,
+        "neatness": 5,
+        "communication": 5
+      },
+      "psychomotor": {
+        "handwriting": 5,
+        "fluency": 5,
+        "neatness": 5
+      },
+      "remarks": {
+        "teacher": "An outstanding genius. Fatima has topped the class in all assessments. Unmatched dedication.",
+        "teacherName": "Miss Blessing Obaka",
+        "teacherSignature": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"150\" height=\"50\" viewBox=\"0 0 150 50\"><path d=\"M10,35 Q30,10 50,30 T90,20 T130,30\" fill=\"none\" stroke=\"%231e3a8a\" stroke-width=\"2\" stroke-linecap=\"round\"/><text x=\"15\" y=\"45\" font-family=\"cursive\" font-size=\"10\" fill=\"%231e3a8a\">Miss Blessing Obaka</text></svg>",
+        "teacherDate": "2026-07-28",
+        "principal": "",
+        "principalName": "Mrs Chinyere Anokam",
+        "principalSignature": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"150\" height=\"50\" viewBox=\"0 0 150 50\"><path d=\"M15,25 C25,10 40,40 55,25 S80,10 100,25 S125,15 135,35\" fill=\"none\" stroke=\"%23064e3b\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><text x=\"15\" y=\"45\" font-family=\"cursive\" font-size=\"11\" fill=\"%23064e3b\">Mrs Chinyere Anokam</text></svg>",
+        "principalDate": ""
+      }
+    },
+    {
+      "id": "res_std4_sss1",
+      "student_id": "std4",
+      "class_id": "sss1",
+      "term": "3rd Term",
+      "session": "2025/2026",
+      "status": "published",
+      "scores": {
+        "math": {
+          "ca1": 16,
+          "ca2": 15,
+          "exam": 46,
+          "total": 77
+        },
+        "eng": {
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75
+        },
+        "physics": {
+          "ca1": 14,
+          "ca2": 13,
+          "exam": 41,
+          "total": 68
+        },
+        "chemistry": {
+          "ca1": 15,
+          "ca2": 14,
+          "exam": 43,
+          "total": 72
+        },
+        "biology": {
+          "ca1": 16,
+          "ca2": 17,
+          "exam": 49,
+          "total": 82
+        },
+        "civic_edu": {
+          "ca1": 15,
+          "ca2": 16,
+          "exam": 47,
+          "total": 78
+        }
+      },
+      "traits": {
+        "activeness": 4,
+        "attendance": 5,
+        "punctuality": 4,
+        "selfControl": 4,
+        "honesty": 4,
+        "humility": 4,
+        "leadership": 4,
+        "neatness": 4,
+        "communication": 4
+      },
+      "psychomotor": {
+        "handwriting": 4,
+        "fluency": 4,
+        "neatness": 4
+      },
+      "remarks": {
+        "teacher": "Emeka is a focused and hardworking student. He shows great aptitude in Sciences.",
+        "teacherName": "Mr. David Vance",
+        "teacherSignature": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"150\" height=\"50\" viewBox=\"0 0 150 50\"><path d=\"M10,35 Q30,10 50,30 T90,20 T130,30\" fill=\"none\" stroke=\"%231e3a8a\" stroke-width=\"2\" stroke-linecap=\"round\"/><text x=\"15\" y=\"45\" font-family=\"cursive\" font-size=\"10\" fill=\"%231e3a8a\">Emily Cole</text></svg>",
+        "teacherDate": "2026-07-28",
+        "principal": "A very good result. Promoted to SSS 2.",
+        "principalName": "Mrs Chinyere Anokam",
+        "principalSignature": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"150\" height=\"50\" viewBox=\"0 0 150 50\"><path d=\"M15,25 C25,10 40,40 55,25 S80,10 100,25 S125,15 135,35\" fill=\"none\" stroke=\"%23064e3b\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><text x=\"15\" y=\"45\" font-family=\"cursive\" font-size=\"11\" fill=\"%23064e3b\">Mrs Chinyere Anokam</text></svg>",
+        "principalDate": "2026-07-30"
+      }
+    }
+  ],
+  "audit_logs": [],
+  "lockouts": []
+}

@@ -554,7 +554,7 @@ export default function AdminPortal() {
 
 
   const nameParts = schoolName.split(' ');
-  const firstWord = nameParts[0] || 'HIGGSFIELD';
+  const firstWord = nameParts[0] || 'MANNA';
   const restOfName = nameParts.slice(1).join(' ') || 'Academy';
 
   return (

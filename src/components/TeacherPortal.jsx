@@ -46,7 +46,7 @@ export default function TeacherPortal() {
   const [teacherDate, setTeacherDate] = useState('');
 
   const [principalRemark, setPrincipalRemark] = useState('');
-  const [principalName, setPrincipalName] = useState('Dr. Joseph Alao');
+  const [principalName, setPrincipalName] = useState('Mrs Chinyere Anokam');
   const [principalSignature, setPrincipalSignature] = useState('');
   const [principalDate, setPrincipalDate] = useState('');
   
@@ -105,7 +105,7 @@ export default function TeacherPortal() {
     setTeacherDate(masterRes?.remarks?.teacherDate || new Date().toISOString().split('T')[0]);
 
     setPrincipalRemark(masterRes?.remarks?.principal || '');
-    setPrincipalName(masterRes?.remarks?.principalName || 'Dr. Joseph Alao');
+    setPrincipalName(masterRes?.remarks?.principalName || 'Mrs Chinyere Anokam');
     setPrincipalSignature(masterRes?.remarks?.principalSignature || '');
     setPrincipalDate(masterRes?.remarks?.principalDate || new Date().toISOString().split('T')[0]);
   };

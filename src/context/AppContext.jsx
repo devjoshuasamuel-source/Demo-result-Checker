@@ -51,16 +51,16 @@ export const AppProvider = ({ children }) => {
 
   // Settings & Branding States
   const [adminPassword, setAdminPassword] = useState('admin123');
-  const [adminEmail, setAdminEmail] = useState('admin@higgsfield.edu');
-  const [schoolName, setSchoolName] = useState('Higgsfield Academy');
-  const [schoolSubtitle, setSchoolSubtitle] = useState('Standalone Academic Results Checker Portal');
+  const [adminEmail, setAdminEmail] = useState('admin@mannaacademy.sch.ng');
+  const [schoolName, setSchoolName] = useState('Manna Academy');
+  const [schoolSubtitle, setSchoolSubtitle] = useState('Kaduna');
   const [schoolLogo, setSchoolLogo] = useState('/logo.png');
-  const [schoolMotto, setSchoolMotto] = useState('Knowledge and Integrity');
-  const [schoolAddress, setSchoolAddress] = useState('Km 12, Lagos-Ibadan Expressway, Lagos, Nigeria | Est. 2012');
+  const [schoolMotto, setSchoolMotto] = useState('Established in 2019');
+  const [schoolAddress, setSchoolAddress] = useState('Plot C2A, Hakimi Close, off Makera-Kujama Road, Sabo G.R.A, Kaduna South, Kaduna');
   const [reportCardFont, setReportCardFont] = useState('inter');
   const [reportCardHeaderFont, setReportCardHeaderFont] = useState('cinzel');
   const [reportCardHeaderFontSize, setReportCardHeaderFontSize] = useState('2rem');
-  const [adminName, setAdminName] = useState('Dr. Joseph Alao');
+  const [adminName, setAdminName] = useState('Mrs Chinyere Anokam');
   
   const defaultAvatar = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231e3a8a'/><circle cx='50' cy='40' r='20' fill='%23ffffff'/><path d='M20,85 C20,65 30,55 50,55 C70,55 80,65 80,85 Z' fill='%23ffffff'/></svg>";
   const [adminAvatar, setAdminAvatar] = useState(defaultAvatar);
@@ -170,16 +170,16 @@ export const AppProvider = ({ children }) => {
                 subjects: Object.keys(legacySubjects).length > 0 ? legacySubjects : (data.subjects || {}),
                 auditLogs: legacyAuditLogs.length > 0 ? legacyAuditLogs : (data.auditLogs || []),
                 gradingScale: legacyGradingScale || data.settings?.gradingScale || defaultGradingScale,
-                schoolName: localStorage.getItem('mc_school_name') || data.settings?.schoolName || 'Higgsfield Academy',
-                schoolSubtitle: localStorage.getItem('mc_school_subtitle') || data.settings?.schoolSubtitle || 'Standalone Academic Results Checker Portal',
+                schoolName: localStorage.getItem('mc_school_name') || data.settings?.schoolName || 'Manna Academy',
+                schoolSubtitle: localStorage.getItem('mc_school_subtitle') || data.settings?.schoolSubtitle || 'Kaduna',
                 schoolLogo: localStorage.getItem('mc_school_logo') || data.settings?.schoolLogo || '/logo.png',
-                schoolMotto: localStorage.getItem('mc_school_motto') || data.settings?.schoolMotto || 'Knowledge and Integrity',
+                schoolMotto: localStorage.getItem('mc_school_motto') || data.settings?.schoolMotto || 'Established in 2019',
                 schoolAddress: localStorage.getItem('mc_school_address') || data.settings?.schoolAddress || '',
                 reportCardFont: localStorage.getItem('mc_report_card_font') || data.settings?.reportCardFont || 'inter',
                 reportCardHeaderFont: localStorage.getItem('mc_report_card_header_font') || data.settings?.reportCardHeaderFont || 'cinzel',
                 reportCardHeaderFontSize: localStorage.getItem('mc_report_card_header_font_size') || data.settings?.reportCardHeaderFontSize || '2rem',
-                adminName: localStorage.getItem('mc_admin_name') || data.settings?.adminName || 'Dr. Joseph Alao',
-                adminEmail: localStorage.getItem('mc_admin_email') || data.settings?.adminEmail || 'admin@higgsfield.edu',
+                adminName: localStorage.getItem('mc_admin_name') || data.settings?.adminName || 'Mrs Chinyere Anokam',
+                adminEmail: localStorage.getItem('mc_admin_email') || data.settings?.adminEmail || 'admin@mannaacademy.sch.ng',
                 adminPassword: localStorage.getItem('mc_admin_password') || data.settings?.adminPassword || 'admin123',
                 adminAvatar: localStorage.getItem('mc_admin_avatar') || data.settings?.adminAvatar || defaultAvatar,
                 currentSession: localStorage.getItem('mc_current_session') || data.settings?.currentSession || '2025/2026',
@@ -695,8 +695,8 @@ export const AppProvider = ({ children }) => {
               remarks: {
                 ...(r.remarks || {}),
                 principal: remark,
-                principalName: 'Dr. Joseph Alao',
-                principalSignature: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"><path d="M15,25 C30,5 45,45 60,25 S85,5 110,25 S135,15 145,35" fill="none" stroke="%23064e3b" stroke-width="2.5" stroke-linecap="round"/><text x="15" y="45" font-family="cursive" font-size="11" fill="%23064e3b">Dr. Joseph Alao</text></svg>',
+                principalName: 'Mrs Chinyere Anokam',
+                principalSignature: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"><path d="M15,25 C25,10 40,40 55,25 S80,10 100,25 S125,15 135,35" fill="none" stroke="%23064e3b" stroke-width="2.5" stroke-linecap="round"/><text x="15" y="45" font-family="cursive" font-size="11" fill="%23064e3b">Mrs Chinyere Anokam</text></svg>',
                 principalDate: new Date().toISOString().split('T')[0]
               }
             };
@@ -732,8 +732,8 @@ export const AppProvider = ({ children }) => {
               remarks: {
                 ...(r.remarks || {}),
                 principal: remark,
-                principalName: 'Dr. Joseph Alao',
-                principalSignature: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"><path d="M15,25 C30,5 45,45 60,25 S85,5 110,25 S135,15 145,35" fill="none" stroke="%23064e3b" stroke-width="2.5" stroke-linecap="round"/><text x="15" y="45" font-family="cursive" font-size="11" fill="%23064e3b">Dr. Joseph Alao</text></svg>',
+                principalName: 'Mrs Chinyere Anokam',
+                principalSignature: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"><path d="M15,25 C25,10 40,40 55,25 S80,10 100,25 S125,15 135,35" fill="none" stroke="%23064e3b" stroke-width="2.5" stroke-linecap="round"/><text x="15" y="45" font-family="cursive" font-size="11" fill="%23064e3b">Mrs Chinyere Anokam</text></svg>',
                 principalDate: new Date().toISOString().split('T')[0]
               }
             };
@@ -871,7 +871,7 @@ export const AppProvider = ({ children }) => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(getFullDatabaseJson(), null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `higgsfield_db_${Date.now()}.json`);
+    downloadAnchor.setAttribute("download", `manna_academy_db_${Date.now()}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();

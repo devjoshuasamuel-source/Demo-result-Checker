@@ -1,4 +1,4 @@
-// Seed data for Higgsfield Academy Result Checker
+// Seed data for Manna Academy Result Checker
 
 export const initialClasses = [
   { id: 'jss1', name: 'JSS 1', baseName: 'JSS 1', arm: '', subjects: ['math', 'eng', 'basic_sci', 'civic_edu', 'agric_sci'] },
@@ -8,7 +8,7 @@ export const initialClasses = [
 ];
 
 export const initialSubjects = {
-  math: { id: 'math', name: 'Mathematics', defaultTeacher: 'Mrs. Emily Cole' },
+  math: { id: 'math', name: 'Mathematics', defaultTeacher: 'Miss Blessing Obaka' },
   eng: { id: 'eng', name: 'English Language', defaultTeacher: 'Mr. David Vance' },
   basic_sci: { id: 'basic_sci', name: 'Basic Science', defaultTeacher: 'Dr. John Okoye' },
   civic_edu: { id: 'civic_edu', name: 'Civic Education', defaultTeacher: 'Mrs. Sarah Adeleke' },
@@ -29,16 +29,16 @@ export const defaultAvatars = [
 ];
 
 export const initialTeachers = [
-  { id: 't1', name: 'Mrs. Emily Cole', email: 'emily.cole@higgsfield.edu', password: 'password123', assignedClass: 'jss1', subjects: ['math'], photo: defaultAvatars[0] },
-  { id: 't2', name: 'Mr. David Vance', email: 'david.vance@higgsfield.edu', password: 'password123', assignedClass: 'sss1', subjects: ['eng'], photo: defaultAvatars[1] },
-  { id: 't3', name: 'Dr. John Okoye', email: 'john.okoye@higgsfield.edu', password: 'password123', assignedClass: 'sss2', subjects: ['physics', 'basic_sci'], photo: defaultAvatars[2] },
-  { id: 't4', name: 'Mrs. Blessing Benson', email: 'blessing.b@higgsfield.edu', password: 'password123', assignedClass: 'sss1', subjects: ['chemistry'], photo: defaultAvatars[3] }
+  { id: 't1', name: 'Miss Blessing Obaka', email: 'blessing.obaka@mannaacademy.sch.ng', password: 'password123', assignedClass: 'jss1', subjects: ['math'], photo: defaultAvatars[0] },
+  { id: 't2', name: 'Mr. David Vance', email: 'david.vance@mannaacademy.sch.ng', password: 'password123', assignedClass: 'sss1', subjects: ['eng'], photo: defaultAvatars[1] },
+  { id: 't3', name: 'Dr. John Okoye', email: 'john.okoye@mannaacademy.sch.ng', password: 'password123', assignedClass: 'sss2', subjects: ['physics', 'basic_sci'], photo: defaultAvatars[2] },
+  { id: 't4', name: 'Mrs. Blessing Benson', email: 'blessing.b@mannaacademy.sch.ng', password: 'password123', assignedClass: 'sss1', subjects: ['chemistry'], photo: defaultAvatars[3] }
 ];
 
 // Seed standard Signatures as cursive SVGs
 export const mockSignatures = {
-  teacher: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"><path d="M10,35 Q30,10 50,30 T90,20 T130,30" fill="none" stroke="%231e3a8a" stroke-width="2" stroke-linecap="round"/><text x="15" y="45" font-family="cursive" font-size="10" fill="%231e3a8a">Emily Cole</text></svg>',
-  principal: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"><path d="M15,25 C30,5 45,45 60,25 S85,5 110,25 S135,15 145,35" fill="none" stroke="%23064e3b" stroke-width="2.5" stroke-linecap="round"/><text x="15" y="45" font-family="cursive" font-size="11" fill="%23064e3b">Dr. Joseph Alao</text></svg>'
+  teacher: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"><path d="M10,35 Q30,10 50,30 T90,20 T130,30" fill="none" stroke="%231e3a8a" stroke-width="2" stroke-linecap="round"/><text x="15" y="45" font-family="cursive" font-size="10" fill="%231e3a8a">Miss Blessing Obaka</text></svg>',
+  principal: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"><path d="M15,25 C30,5 45,45 60,25 S85,5 110,25 S135,15 145,35" fill="none" stroke="%23064e3b" stroke-width="2.5" stroke-linecap="round"/><text x="15" y="45" font-family="cursive" font-size="11" fill="%23064e3b">Mrs Chinyere Anokam</text></svg>'
 };
 
 export const initialStudents = [
@@ -132,11 +132,11 @@ export const initialResults = [
     },
     remarks: {
       teacher: 'Adegoke is an exceptional student. His academic enthusiasm and neatness are outstanding. Keep up the high standard.',
-      teacherName: 'Mrs. Emily Cole',
+      teacherName: 'Mrs. Miss Blessing Obaka',
       teacherSignature: mockSignatures.teacher,
       teacherDate: '2026-07-28',
       principal: 'A stellar academic performance. Promoted to JSS 2 with honors.',
-      principalName: 'Dr. Joseph Alao',
+      principalName: 'Mrs Chinyere Anokam',
       principalSignature: mockSignatures.principal,
       principalDate: '2026-07-30'
     }
@@ -173,11 +173,11 @@ export const initialResults = [
     },
     remarks: {
       teacher: 'Chinedu has shown satisfactory progress this term. More effort is needed in Mathematics and Sciences.',
-      teacherName: 'Mrs. Emily Cole',
+      teacherName: 'Mrs. Miss Blessing Obaka',
       teacherSignature: mockSignatures.teacher,
       teacherDate: '2026-07-28',
       principal: 'Good results. Promoted to JSS 2.',
-      principalName: 'Dr. Joseph Alao',
+      principalName: 'Mrs Chinyere Anokam',
       principalSignature: mockSignatures.principal,
       principalDate: '2026-07-30'
     }
@@ -214,11 +214,11 @@ export const initialResults = [
     },
     remarks: {
       teacher: 'An outstanding genius. Fatima has topped the class in all assessments. Unmatched dedication.',
-      teacherName: 'Mrs. Emily Cole',
+      teacherName: 'Mrs. Miss Blessing Obaka',
       teacherSignature: mockSignatures.teacher,
       teacherDate: '2026-07-28',
       principal: '', // Admin has not yet added Principal remark or published
-      principalName: 'Dr. Joseph Alao',
+      principalName: 'Mrs Chinyere Anokam',
       principalSignature: mockSignatures.principal,
       principalDate: ''
     }
@@ -260,7 +260,7 @@ export const initialResults = [
       teacherSignature: mockSignatures.teacher,
       teacherDate: '2026-07-28',
       principal: 'A very good result. Promoted to SSS 2.',
-      principalName: 'Dr. Joseph Alao',
+      principalName: 'Mrs Chinyere Anokam',
       principalSignature: mockSignatures.principal,
       principalDate: '2026-07-30'
     }
@@ -278,14 +278,14 @@ export const initialAuditLogs = [
   {
     id: 'log2',
     action: 'Class assigned to Teachers',
-    user: 'Principal Alao',
+    user: 'Principal Anokam',
     timestamp: '2026-08-08T01:15:00Z',
-    details: 'Mrs. Emily Cole assigned to JSS 1 Mathematics; Mr. David Vance assigned to SSS 1 English.'
+    details: 'Mrs. Miss Blessing Obaka assigned to JSS 1 Mathematics; Mr. David Vance assigned to SSS 1 English.'
   },
   {
     id: 'log3',
     action: 'Draft results submitted',
-    user: 'Mrs. Emily Cole (Teacher)',
+    user: 'Mrs. Miss Blessing Obaka (Teacher)',
     timestamp: '2026-08-08T03:30:00Z',
     details: 'Submitted final JSS 1 3rd Term results for Samson, Chinedu, and Fatima as Draft.'
   },
