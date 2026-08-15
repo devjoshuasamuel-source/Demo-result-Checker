@@ -3754,7 +3754,234 @@ button, input, select, .btn, .admin-sidebar-link, .sidebar-link {
 .btn-home-full {
   width: 100%;
 }
+/* ==========================================
+   Modern App-Like Login Portal Layout
+   ========================================== */
 
+.login-portal-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  background: linear-gradient(135deg, #eff6ff 0%, #f1f5f9 100%);
+  padding: 2.5rem 1rem;
+  width: 100%;
+}
 
+.login-portal-card-outer {
+  max-width: 440px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
 
+.login-portal-brand-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.brand-logo-frame {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  padding: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-logo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.login-brand-title {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.login-brand-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+}
+
+.login-pill-switcher {
+  background-color: #e2e8f0;
+  padding: 4px;
+  border-radius: 12px;
+  display: flex;
+  gap: 4px;
+  width: 100%;
+  border: 1px solid #cbd5e1;
+}
+
+.pill-switch-btn {
+  flex: 1;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.55rem;
+  transition: all 0.2s ease;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.pill-switch-btn.active {
+  background-color: #ffffff;
+  color: #1d4ed8;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+}
+
+.login-form-card-inner {
+  background-color: #ffffff;
+  padding: 1.75rem;
+  border-radius: 20px;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+  border: 1px solid #f1f5f9;
+}
+
+.input-with-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.field-icon {
+  position: absolute;
+  left: 1rem;
+  width: 20px;
+  height: 20px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.form-control-icon {
+  width: 100%;
+  height: 48px;
+  padding-left: 2.75rem;
+  padding-right: 1rem;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.925rem;
+  color: #0f172a;
+  transition: all 0.2s ease;
+}
+
+.form-control-icon::placeholder {
+  color: #94a3b8;
+}
+
+.form-control-icon:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px #dbeafe;
+}
+
+.btn-auth-primary {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.2);
+}
+
+.btn-auth-primary:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(37, 99, 235, 0.3);
+}
+
+.btn-auth-primary:active {
+  transform: translateY(0);
+}
+
+.login-portal-mobile-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 0.5rem;
+}
+
+.login-portal-mobile-footer p {
+  margin: 0;
+}
+
+.login-portal-mobile-footer .powered-by-text {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  transition: opacity 0.2s ease;
+  width: 20px;
+  height: 20px;
+}
+
+.password-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.maintenance-icon-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--warning-light);
+  color: var(--warning);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  /* Ensure the login card fits screen viewports */
+  .login-portal-wrapper {
+    min-height: 100vh;
+    padding: 1.5rem 1rem;
+    align-items: center;
+  }
+}
 
